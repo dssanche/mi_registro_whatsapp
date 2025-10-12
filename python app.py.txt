@@ -1,0 +1,2 @@
+cd C:\Users\USUARIO\Desktop\mi_registro_whatsapp
+python app.py
