@@ -2,6 +2,8 @@
 <html>
 <head>
     <title>Registro - Únete al equipo de Alejo 🐪</title>
+    <!-- Librería QR que funciona en el navegador -->
+    <script src="https://cdn.jsdelivr.net/npm/qrcode@1.5.3/build/qrcode.min.js"></script>
     <style>
         body { 
             font-family: 'Arial', sans-serif; 
@@ -151,22 +153,10 @@
             margin-top: 8px;
             font-size: 14px;
         }
-        .qr-placeholder {
-            width: 200px;
-            height: 200px;
-            background: #f0f0f0;
-            border: 2px dashed #8A2BE2;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin: 10px auto;
+        .qr-canvas {
+            border: 3px solid #8A2BE2;
             border-radius: 10px;
-            color: #8A2BE2;
-            font-weight: bold;
-        }
-        .loading {
-            color: #8A2BE2;
-            font-style: italic;
+            margin: 10px auto;
         }
     </style>
 </head>
@@ -212,7 +202,7 @@
             <div id="qrSection" class="qr-section" style="display: none;">
                 <h3 style="color: #8A2BE2;">📱 Escanea el QR para compartir</h3>
                 <div id="qrContainer">
-                    <div class="loading">Cargando QR...</div>
+                    <!-- El QR se generará aquí -->
                 </div>
                 <div class="link-section">
                     <strong>🔗 Link directo:</strong><br>
@@ -316,31 +306,33 @@
                 // Actualizar link directo
                 directLink.textContent = formUrl;
                 
-                // USAR SERVICIO EXTERNO PARA GENERAR QR (MÁS CONFIABLE)
-                const qrExternoUrl = `https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=${encodeURIComponent(formUrl)}`;
+                // GENERAR QR DIRECTAMENTE EN EL NAVEGADOR
+                qrContainer.innerHTML = '<canvas id="qrCanvas" class="qr-canvas"></canvas>';
                 
-                qrContainer.innerHTML = `
-                    <img src="${qrExternoUrl}" 
-                         alt="QR Code para ${liderId}" 
-                         class="qr-image"
-                         onload="console.log('QR cargado exitosamente')"
-                         onerror="mostrarPlaceholderQR()">
-                `;
+                QRCode.toCanvas(document.getElementById('qrCanvas'), formUrl, {
+                    width: 200,
+                    margin: 2,
+                    color: {
+                        dark: '#8A2BE2',  // Color morado
+                        light: '#FFFFFF'  // Fondo blanco
+                    }
+                }, function(error) {
+                    if (error) {
+                        console.error('Error generando QR:', error);
+                        qrContainer.innerHTML = `
+                            <div style="color: #ff6b6b; font-weight: bold;">
+                                ❌ Error generando QR<br>
+                                Usa el link directo
+                            </div>
+                        `;
+                    } else {
+                        console.log('✅ QR generado exitosamente en el navegador');
+                    }
+                });
                 
-                console.log("Generando QR con servicio externo:", qrExternoUrl);
             } else {
                 qrSection.style.display = 'none';
             }
-        }
-
-        function mostrarPlaceholderQR() {
-            const qrContainer = document.getElementById('qrContainer');
-            qrContainer.innerHTML = `
-                <div class="qr-placeholder">
-                    QR No Disponible<br>
-                    Usa el Link
-                </div>
-            `;
         }
 
         function copiarLink() {
