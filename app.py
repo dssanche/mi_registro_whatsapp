@@ -10,43 +10,89 @@ import requests
 
 app = Flask(__name__)
 
-# --- CONFIGURACIÓN GOOGLE SHEETS ---
-# --- CONFIGURACIÓN GOOGLE SHEETS SIMPLIFICADA ---
+# --- CONFIGURACIÓN GOOGLE SHEETS CON DEBUG ---
 SCOPE = [
     "https://spreadsheets.google.com/feeds",
     "https://www.googleapis.com/auth/drive"
 ]
 
-def get_sheet_connection():
-    """Conexión simple y robusta a Google Sheets"""
+def debug_google_sheets():
+    """Debug completo de la conexión a Google Sheets"""
+    print("=== 🔍 INICIANDO DEBUG GOOGLE SHEETS ===")
+    
+    # 1. Verificar variables de entorno
+    print("1. 📋 Verificando variables de entorno...")
+    required_vars = ['GCP_PRIVATE_KEY', 'GCP_CLIENT_EMAIL']
+    for var in required_vars:
+        if var in os.environ:
+            value = os.environ[var]
+            print(f"   ✅ {var}: {'PRESENTE' if value else 'VACÍA'}")
+            if var == 'GCP_PRIVATE_KEY':
+                # Mostrar solo primeros y últimos caracteres por seguridad
+                if value:
+                    preview = value[:50] + "..." + value[-50:] if len(value) > 100 else value
+                    print(f"      Preview: {preview}")
+        else:
+            print(f"   ❌ {var}: FALTANTE")
+    
+    # 2. Verificar si tenemos las variables mínimas
+    if not all(var in os.environ and os.environ[var] for var in required_vars):
+        print("❌ Faltan variables esenciales")
+        return None
+    
     try:
-        # Solo verificar las variables absolutamente necesarias
-        if not all([os.environ.get('GCP_PRIVATE_KEY'), os.environ.get('GCP_CLIENT_EMAIL')]):
-            print("❌ Variables esenciales faltantes")
-            return None
-            
+        # 3. Construir credenciales
+        print("2. 🛠️ Construyendo credenciales...")
         service_account_info = {
             "type": "service_account",
-            "project_id": os.environ.get('GCP_PROJECT_ID', ''),
+            "project_id": os.environ.get('GCP_PROJECT_ID', 'ultra-helper-453214-e2'),
             "private_key_id": os.environ.get('GCP_PRIVATE_KEY_ID', ''),
             "private_key": os.environ['GCP_PRIVATE_KEY'].replace('\\n', '\n'),
             "client_email": os.environ['GCP_CLIENT_EMAIL'],
             "client_id": os.environ.get('GCP_CLIENT_ID', ''),
             "auth_uri": "https://accounts.google.com/o/oauth2/auth",
-            "token_uri": "https://oauth2.googleapis.com/token", 
+            "token_uri": "https://oauth2.googleapis.com/token",
             "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
             "client_x509_cert_url": os.environ.get('GCP_CLIENT_X509_CERT_URL', ''),
         }
+        print("   ✅ Credenciales construidas")
         
+        # 4. Crear objeto de credenciales
+        print("3. 🔑 Creando objeto ServiceAccountCredentials...")
         creds = ServiceAccountCredentials.from_json_keyfile_dict(service_account_info, SCOPE)
+        print("   ✅ Credenciales creadas")
+        
+        # 5. Autorizar cliente
+        print("4. 🔓 Autorizando cliente gspread...")
         client = gspread.authorize(creds)
-        return client.open_by_key("1pLwMJlZpaUTwTaXBEZJK_9dGoUecP1UJt2b3ylDpZac").sheet1
+        print("   ✅ Cliente autorizado")
+        
+        # 6. Acceder a la hoja
+        print("5. 📊 Accediendo a la hoja...")
+        SPREADSHEET_ID = "1pLwMJlZpaUTwTaXBEZJK_9dGoUecP1UJt2b3ylDpZac"
+        spreadsheet = client.open_by_key(SPREADSHEET_ID)
+        sheet = spreadsheet.sheet1
+        print("   ✅ Hoja accedida exitosamente")
+        
+        # 7. Probar lectura
+        print("6. 📖 Probando lectura de datos...")
+        records = sheet.get_all_records()
+        print(f"   ✅ Datos leídos: {len(records)} registros encontrados")
+        
+        print("=== ✅ GOOGLE SHEETS CONECTADO EXITOSAMENTE ===")
+        return sheet
         
     except Exception as e:
-        print(f"❌ Error conexión Google Sheets: {e}")
+        print(f"=== ❌ ERROR DETALLADO ===")
+        print(f"Tipo de error: {type(e).__name__}")
+        print(f"Mensaje: {str(e)}")
+        import traceback
+        print(f"Traceback completo:")
+        print(traceback.format_exc())
         return None
 
-sheet = get_sheet_connection()
+sheet = debug_google_sheets()
+
 # --- ENLACE AL GRUPO DE WHATSAPP ---
 WHATSAPP_GROUP_LINK = "https://chat.whatsapp.com/BlXfChwXszFHroaBEUDnw8"
 
