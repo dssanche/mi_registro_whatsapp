@@ -115,6 +115,14 @@
             margin-top: 8px;
             font-size: 14px;
         }
+        .debug-info {
+            background: #fff3cd;
+            padding: 10px;
+            border-radius: 5px;
+            margin: 10px 0;
+            font-size: 12px;
+            color: #856404;
+        }
     </style>
 </head>
 <body>
@@ -123,6 +131,11 @@
             <div class="camello-icon">🐪</div>
             <h1>Únete al equipo de Alejo</h1>
             <div class="subtitle">¡Forma parte de nuestra comunidad!</div>
+        </div>
+
+        <!-- Debug info para verificar el líder seleccionado -->
+        <div class="debug-info" style="display: none;">
+            Líder seleccionado: <span id="debug-lider">{{ lider_seleccionado }}</span>
         </div>
         
         <form action="/registro" method="POST">
@@ -169,10 +182,35 @@
                 <div id="edad-display" class="edad-calculada"></div>
             </div>
 
+            <!-- LOCALIDAD COMO DESPLEGABLE -->
             <div class="form-group">
                 <label for="localidad">🏠 Localidad:</label>
-                <input type="text" id="localidad" name="localidad" required>
+                <select id="localidad" name="localidad" required>
+                    <option value="">-- Selecciona tu localidad --</option>
+                    <option value="Bosa">Bosa</option>
+                    <option value="Kennedy">Kennedy</option>
+                    <option value="Suba">Suba</option>
+                    <option value="Engativá">Engativá</option>
+                    <option value="Fontibón">Fontibón</option>
+                    <option value="Usme">Usme</option>
+                    <option value="Ciudad Bolívar">Ciudad Bolívar</option>
+                    <option value="San Cristóbal">San Cristóbal</option>
+                    <option value="Usaquén">Usaquén</option>
+                    <option value="Chapinero">Chapinero</option>
+                    <option value="Santa Fe">Santa Fe</option>
+                    <option value="Barrios Unidos">Barrios Unidos</option>
+                    <option value="Teusaquillo">Teusaquillo</option>
+                    <option value="Los Mártires">Los Mártires</option>
+                    <option value="Antonio Nariño">Antonio Nariño</option>
+                    <option value="Puente Aranda">Puente Aranda</option>
+                    <option value="Candelaria">Candelaria</option>
+                    <option value="Rafael Uribe">Rafael Uribe</option>
+                    <option value="Tunjuelito">Tunjuelito</option>
+                    <option value="Otra">Otra</option>
+                </select>
             </div>
+
+            <!-- QUITAR EL CAMPO DE EDAD -->
 
             <button type="submit">✅ Unirse al grupo de WhatsApp</button>
         </form>
@@ -213,6 +251,8 @@
             const qrContainer = document.getElementById('qrContainer');
             const directLink = document.getElementById('directLink');
 
+            console.log("Actualizando QR para líder:", liderId);
+
             if (liderId) {
                 // Mostrar sección del QR
                 qrSection.style.display = 'block';
@@ -224,8 +264,11 @@
                 // Actualizar link directo
                 directLink.textContent = formUrl;
                 
-                // Cargar imagen QR
-                qrContainer.innerHTML = `<img src="/qr/${liderId}" alt="QR Code" class="qr-image">`;
+                // Cargar imagen QR - FORZAR ACTUALIZACIÓN
+                const timestamp = new Date().getTime(); // Para evitar cache
+                qrContainer.innerHTML = `<img src="/qr/${liderId}?t=${timestamp}" alt="QR Code para ${liderId}" class="qr-image" onerror="this.style.display='none'">`;
+                
+                console.log("QR URL:", `/qr/${liderId}`);
             } else {
                 qrSection.style.display = 'none';
             }
@@ -235,25 +278,39 @@
             const linkText = document.getElementById('directLink').textContent;
             navigator.clipboard.writeText(linkText).then(function() {
                 alert('✅ Link copiado al portapapeles!');
+            }).catch(function() {
+                // Fallback para navegadores antiguos
+                const tempInput = document.createElement('input');
+                tempInput.value = linkText;
+                document.body.appendChild(tempInput);
+                tempInput.select();
+                document.execCommand('copy');
+                document.body.removeChild(tempInput);
+                alert('✅ Link copiado al portapapeles!');
             });
         }
 
         // Inicializar cuando cargue la página
         document.addEventListener('DOMContentLoaded', function() {
+            console.log("Página cargada - Líder seleccionado:", "{{ lider_seleccionado }}");
+            
             // Configurar calculadora de edad
             const fechaNacimiento = document.getElementById('nacimiento');
             fechaNacimiento.addEventListener('change', calcularYMostrarEdad);
             
-            // Calcular edad inicial si ya hay una fecha
-            if (fechaNacimiento.value) {
-                calcularYMostrarEdad();
-            }
-
             // Inicializar QR si ya hay un líder seleccionado
             const liderSelect = document.getElementById('lider');
             if (liderSelect.value) {
+                console.log("Inicializando QR para líder:", liderSelect.value);
                 actualizarQR();
             }
+
+            // Forzar actualización del QR después de un breve delay
+            setTimeout(function() {
+                if (liderSelect.value) {
+                    actualizarQR();
+                }
+            }, 500);
         });
     </script>
 </body>
