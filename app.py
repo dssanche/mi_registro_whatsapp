@@ -18,29 +18,21 @@ SCOPE = [
 ]
 
 def get_sheet():
-    """Conexión mínima a Google Sheets"""
     try:
-        # Solo las 2 variables absolutamente esenciales
-        private_key = os.environ.get('GCP_PRIVATE_KEY', '').replace('\\n', '\n')
-        client_email = os.environ.get('GCP_CLIENT_EMAIL', '')
-        
-        if not private_key or not client_email:
+        import json
+        creds_json = os.environ.get('GCP_CREDENTIALS_JSON', '')
+        if not creds_json:
+            print("❌ No se encontró GCP_CREDENTIALS_JSON")
             return None
-            
-        creds_dict = {
-            "type": "service_account",
-            "private_key": private_key,
-            "client_email": client_email,
-            "token_uri": "https://oauth2.googleapis.com/token",
-        }
-        
+
+        creds_dict = json.loads(creds_json)
         creds = ServiceAccountCredentials.from_json_keyfile_dict(creds_dict, SCOPE)
         client = gspread.authorize(creds)
         return client.open_by_key("1pLwMJlZpaUTwTaXBEZJK_9dGoUecP1UJt2b3ylDpZac").sheet1
-        
     except Exception as e:
         print(f"Error Sheets: {e}")
         return None
+
 
 sheet = get_sheet()
 
