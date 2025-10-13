@@ -7,6 +7,7 @@ from io import BytesIO
 import os
 import re
 import requests
+import io
 
 app = Flask(__name__)
 
@@ -215,14 +216,27 @@ def registro():
 
     return redirect(WHATSAPP_GROUP_LINK)
 
+from flask import send_file
+from io import BytesIO
+import qrcode
+
 @app.route('/qr/<lider_id>')
 def generar_qr(lider_id):
-    if lider_id not in LIDERES:
-        return "Líder no encontrado", 404
-    
+    lider_id_normalizado = lider_id.lower()
+
+    # Si el líder no existe, devolvemos un error limpio
+    if lider_id_normalizado not in LIDERES:
+        return f"Líder '{lider_id}' no encontrado", 404
+
+    # Construimos el link base del formulario
     base_url = get_base_url()
-    url_formulario = f"{base_url}/?lider={lider_id}"
-    
+    url_formulario = f"{base_url}/?lider={lider_id_normalizado}"
+
+    # Verificación adicional por si base_url viene vacío
+    if not base_url or not url_formulario:
+        return "Error generando URL del formulario", 500
+
+    # Generamos el QR
     qr = qrcode.QRCode(
         version=1,
         error_correction=qrcode.constants.ERROR_CORRECT_L,
@@ -231,15 +245,23 @@ def generar_qr(lider_id):
     )
     qr.add_data(url_formulario)
     qr.make(fit=True)
-    
-    # QR con color morado del camello
+
+    # QR con color morado del camello 💜
     img = qr.make_image(fill_color="#9C27B0", back_color="white")
-    
+
+    # Enviar imagen como respuesta
     img_buffer = BytesIO()
-    img.save(img_buffer, format='PNG')
+    img.save(img_buffer, format="PNG")
     img_buffer.seek(0)
     
-    return send_file(img_buffer, mimetype='image/png', as_attachment=False, download_name=f'qr_{lider_id}.png')
+    # Render la muestra directamente (sin descargar)
+    return send_file(
+        img_buffer,
+        mimetype="image/png",
+        as_attachment=False,
+        download_name=f"qr_{lider_id_normalizado}.png"
+    )
+
 
 @app.route('/qr-todos')
 def ver_todos_qr():
