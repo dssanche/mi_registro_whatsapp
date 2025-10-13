@@ -154,10 +154,19 @@ def generar_mensaje_bienvenida(nombre, sexo, localidad):
 
 # URL base - se actualizará automáticamente en producción
 def get_base_url():
-    if 'RENDER_EXTERNAL_URL' in os.environ:
-        return os.environ['RENDER_EXTERNAL_URL']
-    else:
-        return request.url_root.rstrip('/')
+    # En Render
+    if 'RENDER' in os.environ:
+        render_service_name = os.environ.get('RENDER_SERVICE_NAME')
+        if render_service_name:
+            return f"https://{render_service_name}.onrender.com"
+    
+    # Fallback: usar variable de entorno o request
+    base_url = os.environ.get('BASE_URL')
+    if base_url:
+        return base_url.rstrip('/')
+    
+    # Último recurso: usar request
+    return request.url_root.rstrip('/')
 # --- RUTAS ---
 @app.route('/')
 def index():
