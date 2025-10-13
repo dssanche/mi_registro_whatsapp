@@ -115,13 +115,18 @@
             margin-top: 8px;
             font-size: 14px;
         }
-        .debug-info {
-            background: #fff3cd;
-            padding: 10px;
-            border-radius: 5px;
-            margin: 10px 0;
-            font-size: 12px;
-            color: #856404;
+        .qr-placeholder {
+            width: 200px;
+            height: 200px;
+            background: #f0f0f0;
+            border: 2px dashed #8A2BE2;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 10px auto;
+            border-radius: 10px;
+            color: #8A2BE2;
+            font-weight: bold;
         }
     </style>
 </head>
@@ -131,11 +136,6 @@
             <div class="camello-icon">🐪</div>
             <h1>Únete al equipo de Alejo</h1>
             <div class="subtitle">¡Forma parte de nuestra comunidad!</div>
-        </div>
-
-        <!-- Debug info para verificar el líder seleccionado -->
-        <div class="debug-info" style="display: none;">
-            Líder seleccionado: <span id="debug-lider">{{ lider_seleccionado }}</span>
         </div>
         
         <form action="/registro" method="POST">
@@ -210,8 +210,6 @@
                 </select>
             </div>
 
-            <!-- QUITAR EL CAMPO DE EDAD -->
-
             <button type="submit">✅ Unirse al grupo de WhatsApp</button>
         </form>
 
@@ -251,8 +249,6 @@
             const qrContainer = document.getElementById('qrContainer');
             const directLink = document.getElementById('directLink');
 
-            console.log("Actualizando QR para líder:", liderId);
-
             if (liderId) {
                 // Mostrar sección del QR
                 qrSection.style.display = 'block';
@@ -264,14 +260,32 @@
                 // Actualizar link directo
                 directLink.textContent = formUrl;
                 
-                // Cargar imagen QR - FORZAR ACTUALIZACIÓN
-                const timestamp = new Date().getTime(); // Para evitar cache
-                qrContainer.innerHTML = `<img src="/qr/${liderId}?t=${timestamp}" alt="QR Code para ${liderId}" class="qr-image" onerror="this.style.display='none'">`;
+                // Intentar cargar el QR dinámico
+                const qrUrl = `/qr/${liderId}`;
+                const timestamp = new Date().getTime();
                 
-                console.log("QR URL:", `/qr/${liderId}`);
+                qrContainer.innerHTML = `
+                    <img src="${qrUrl}?t=${timestamp}" 
+                         alt="QR Code para ${liderId}" 
+                         class="qr-image"
+                         onerror="mostrarPlaceholderQR(this, '${liderId}')">
+                `;
+                
+                console.log("Intentando cargar QR desde:", qrUrl);
             } else {
                 qrSection.style.display = 'none';
             }
+        }
+
+        function mostrarPlaceholderQR(imgElement, liderId) {
+            console.log("Error cargando QR, mostrando placeholder");
+            const qrContainer = document.getElementById('qrContainer');
+            qrContainer.innerHTML = `
+                <div class="qr-placeholder">
+                    QR No Disponible<br>
+                    Usa el Link
+                </div>
+            `;
         }
 
         function copiarLink() {
@@ -292,8 +306,6 @@
 
         // Inicializar cuando cargue la página
         document.addEventListener('DOMContentLoaded', function() {
-            console.log("Página cargada - Líder seleccionado:", "{{ lider_seleccionado }}");
-            
             // Configurar calculadora de edad
             const fechaNacimiento = document.getElementById('nacimiento');
             fechaNacimiento.addEventListener('change', calcularYMostrarEdad);
@@ -301,16 +313,8 @@
             // Inicializar QR si ya hay un líder seleccionado
             const liderSelect = document.getElementById('lider');
             if (liderSelect.value) {
-                console.log("Inicializando QR para líder:", liderSelect.value);
                 actualizarQR();
             }
-
-            // Forzar actualización del QR después de un breve delay
-            setTimeout(function() {
-                if (liderSelect.value) {
-                    actualizarQR();
-                }
-            }, 500);
         });
     </script>
 </body>
