@@ -109,6 +109,12 @@
             color: #8A2BE2;
             font-size: 14px;
         }
+        .edad-calculada {
+            color: #25D366;
+            font-weight: bold;
+            margin-top: 8px;
+            font-size: 14px;
+        }
     </style>
 </head>
 <body>
@@ -158,28 +164,14 @@
             </div>
 
             <div class="form-group">
-                <label for="edad">🎂 Edad:</label>
-                <input type="number" id="edad" name="edad" required>
-            </div>
-
-            <div class="form-group">
                 <label for="nacimiento">📅 Fecha de nacimiento:</label>
                 <input type="date" id="nacimiento" name="nacimiento" required>
+                <div id="edad-display" class="edad-calculada"></div>
             </div>
 
             <div class="form-group">
                 <label for="localidad">🏠 Localidad:</label>
                 <input type="text" id="localidad" name="localidad" required>
-            </div>
-
-            <div class="form-group">
-                <label for="sexo">⚤ Sexo:</label>
-                <select id="sexo" name="sexo" required>
-                    <option value="">-- Selecciona --</option>
-                    <option value="Masculino">Masculino</option>
-                    <option value="Femenino">Femenino</option>
-                    <option value="Otro">Otro</option>
-                </select>
             </div>
 
             <button type="submit">✅ Unirse al grupo de WhatsApp</button>
@@ -191,6 +183,29 @@
     </div>
 
     <script>
+        // Función para calcular y mostrar la edad automáticamente
+        function calcularYMostrarEdad() {
+            const fechaNacimiento = document.getElementById('nacimiento');
+            const edadDisplay = document.getElementById('edad-display');
+            
+            if (fechaNacimiento.value) {
+                const nacimiento = new Date(fechaNacimiento.value);
+                const hoy = new Date();
+                let edad = hoy.getFullYear() - nacimiento.getFullYear();
+                const mes = hoy.getMonth() - nacimiento.getMonth();
+                
+                // Ajustar si aún no ha cumplido años este año
+                if (mes < 0 || (mes === 0 && hoy.getDate() < nacimiento.getDate())) {
+                    edad--;
+                }
+                
+                edadDisplay.textContent = `✅ Edad calculada: ${edad} años`;
+                edadDisplay.style.color = '#25D366';
+            } else {
+                edadDisplay.textContent = '';
+            }
+        }
+
         function actualizarQR() {
             const liderSelect = document.getElementById('lider');
             const liderId = liderSelect.value;
@@ -223,8 +238,18 @@
             });
         }
 
-        // Inicializar QR si ya hay un líder seleccionado
+        // Inicializar cuando cargue la página
         document.addEventListener('DOMContentLoaded', function() {
+            // Configurar calculadora de edad
+            const fechaNacimiento = document.getElementById('nacimiento');
+            fechaNacimiento.addEventListener('change', calcularYMostrarEdad);
+            
+            // Calcular edad inicial si ya hay una fecha
+            if (fechaNacimiento.value) {
+                calcularYMostrarEdad();
+            }
+
+            // Inicializar QR si ya hay un líder seleccionado
             const liderSelect = document.getElementById('lider');
             if (liderSelect.value) {
                 actualizarQR();
