@@ -1,106 +1,194 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Registro - Unete al equipo</title>
+    <title>Registro - Únete al equipo de Alejo 🐪</title>
     <style>
         body { 
-            font-family: Arial, sans-serif; 
+            font-family: 'Arial', sans-serif; 
             max-width: 600px; 
             margin: 0 auto; 
-            padding: 20px; 
+            padding: 20px;
+            background: linear-gradient(135deg, #8A2BE2, #6A0DAD);
+            color: #333;
+        }
+        .container {
+            background: white;
+            border-radius: 15px;
+            padding: 30px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+            margin-top: 20px;
+        }
+        .header {
+            text-align: center;
+            margin-bottom: 25px;
+        }
+        .header h1 {
+            color: #8A2BE2;
+            margin: 0;
+            font-size: 28px;
+        }
+        .header .subtitle {
+            color: #6A0DAD;
+            font-size: 16px;
+            margin-top: 5px;
+        }
+        .camello-icon {
+            font-size: 40px;
+            margin: 10px 0;
         }
         .form-group { 
-            margin-bottom: 15px; 
+            margin-bottom: 20px; 
         }
         label { 
             display: block; 
-            margin-bottom: 5px; 
+            margin-bottom: 8px; 
+            font-weight: bold;
+            color: #6A0DAD;
         }
         input, select { 
             width: 100%; 
-            padding: 8px; 
-            border: 1px solid #ddd; 
-            border-radius: 4px; 
+            padding: 12px; 
+            border: 2px solid #E6E6FA;
+            border-radius: 8px; 
+            box-sizing: border-box;
+            font-size: 16px;
+            transition: border-color 0.3s;
+        }
+        input:focus, select:focus {
+            border-color: #8A2BE2;
+            outline: none;
+            box-shadow: 0 0 5px rgba(138, 43, 226, 0.3);
         }
         button { 
-            background-color: #25D366; 
+            background: linear-gradient(135deg, #8A2BE2, #6A0DAD);
             color: white; 
-            padding: 10px 20px; 
+            padding: 15px; 
             border: none; 
-            border-radius: 4px; 
+            border-radius: 8px; 
             cursor: pointer; 
+            font-size: 18px;
+            width: 100%;
+            font-weight: bold;
+            transition: transform 0.2s;
+        }
+        button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(138, 43, 226, 0.4);
         }
         .qr-section { 
             text-align: center; 
-            margin: 20px 0; 
+            margin: 25px 0; 
             padding: 20px; 
-            border: 1px solid #ddd; 
-            border-radius: 8px; 
+            border: 2px dashed #8A2BE2; 
+            border-radius: 10px; 
+            background-color: #F8F0FF;
         }
         .qr-image { 
             max-width: 200px; 
             margin: 10px auto; 
+            border: 3px solid #8A2BE2;
+            border-radius: 10px;
         }
         .link-section {
-            background-color: #f5f5f5;
+            background-color: #F0E6FF;
             padding: 15px;
             border-radius: 8px;
             margin: 15px 0;
             word-break: break-all;
         }
+        .copy-btn {
+            background: #9370DB;
+            padding: 8px 15px;
+            font-size: 14px;
+            width: auto;
+            margin-top: 10px;
+        }
+        .footer {
+            text-align: center;
+            margin-top: 20px;
+            color: #8A2BE2;
+            font-size: 14px;
+        }
     </style>
 </head>
 <body>
-    <h1>Únete al equipo</h1>
-    
-    <form action="/registro" method="POST">
-        <div class="form-group">
-            <label for="lider">Selecciona tu líder:</label>
-            <select id="lider" name="lider" onchange="actualizarQR()">
-                <option value="">-- Selecciona un líder --</option>
-                {% for id, nombre in lideres.items() %}
-                    <option value="{{ id }}" {% if lider_seleccionado == id %}selected{% endif %}>
-                        {{ nombre }}
-                    </option>
-                {% endfor %}
-            </select>
+    <div class="container">
+        <div class="header">
+            <div class="camello-icon">🐪</div>
+            <h1>Únete al equipo de Alejo</h1>
+            <div class="subtitle">¡Forma parte de nuestra comunidad!</div>
         </div>
-
-        <!-- Sección del QR (se muestra solo cuando se selecciona un líder) -->
-        <div id="qrSection" class="qr-section" style="display: none;">
-            <h3>Escanea el QR para compartir</h3>
-            <div id="qrContainer">
-                <!-- El QR se cargará aquí -->
+        
+        <form action="/registro" method="POST">
+            <!-- Selección de Líder -->
+            <div class="form-group">
+                <label for="lider">👑 Líder:</label>
+                <select id="lider" name="lider" onchange="actualizarQR()" required>
+                    <option value="">-- Selecciona tu líder --</option>
+                    {% for id, nombre in lideres.items() %}
+                        <option value="{{ id }}" {% if lider_seleccionado == id %}selected{% endif %}>
+                            {{ nombre }}
+                        </option>
+                    {% endfor %}
+                </select>
             </div>
-            <div class="link-section">
-                <strong>Link directo:</strong><br>
-                <span id="directLink"></span>
-                <button type="button" onclick="copiarLink()">Copiar Link</button>
+
+            <!-- Sección del QR -->
+            <div id="qrSection" class="qr-section" style="display: none;">
+                <h3 style="color: #8A2BE2;">📱 Escanea el QR para compartir</h3>
+                <div id="qrContainer">
+                    <!-- El QR se cargará aquí -->
+                </div>
+                <div class="link-section">
+                    <strong>🔗 Link directo:</strong><br>
+                    <span id="directLink"></span>
+                    <button type="button" onclick="copiarLink()" class="copy-btn">📋 Copiar Link</button>
+                </div>
             </div>
-        </div>
 
-        <div class="form-group">
-            <label for="nombre">Nombre completo:</label>
-            <input type="text" id="nombre" name="nombre" required>
-        </div>
+            <!-- Información Personal -->
+            <div class="form-group">
+                <label for="nombre">👤 Nombre completo:</label>
+                <input type="text" id="nombre" name="nombre" required>
+            </div>
 
-        <div class="form-group">
-            <label for="telefono">Teléfono:</label>
-            <input type="tel" id="telefono" name="telefono" required>
-        </div>
+            <div class="form-group">
+                <label for="telefono">📞 Teléfono:</label>
+                <input type="tel" id="telefono" name="telefono" required>
+            </div>
 
-        <div class="form-group">
-            <label for="edad">Edad:</label>
-            <input type="number" id="edad" name="edad" required>
-        </div>
+            <div class="form-group">
+                <label for="edad">🎂 Edad:</label>
+                <input type="number" id="edad" name="edad" required>
+            </div>
 
-        <div class="form-group">
-            <label for="nacimiento">Fecha de nacimiento:</label>
-            <input type="date" id="nacimiento" name="nacimiento" required>
-        </div>
+            <div class="form-group">
+                <label for="nacimiento">📅 Fecha de nacimiento:</label>
+                <input type="date" id="nacimiento" name="nacimiento" required>
+            </div>
 
-        <button type="submit">Unirse al grupo de WhatsApp</button>
-    </form>
+            <div class="form-group">
+                <label for="localidad">🏠 Localidad:</label>
+                <input type="text" id="localidad" name="localidad" required>
+            </div>
+
+            <div class="form-group">
+                <label for="sexo">⚤ Sexo:</label>
+                <select id="sexo" name="sexo" required>
+                    <option value="">-- Selecciona --</option>
+                    <option value="Masculino">Masculino</option>
+                    <option value="Femenino">Femenino</option>
+                    <option value="Otro">Otro</option>
+                </select>
+            </div>
+
+            <button type="submit">✅ Unirse al grupo de WhatsApp</button>
+        </form>
+
+        <div class="footer">
+            <p>✨ Formulario de registro - Team Alejo 🐪</p>
+        </div>
+    </div>
 
     <script>
         function actualizarQR() {
@@ -131,7 +219,7 @@
         function copiarLink() {
             const linkText = document.getElementById('directLink').textContent;
             navigator.clipboard.writeText(linkText).then(function() {
-                alert('Link copiado al portapapeles!');
+                alert('✅ Link copiado al portapapeles!');
             });
         }
 
