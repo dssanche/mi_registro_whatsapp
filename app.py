@@ -40,11 +40,12 @@ WHATSAPP_GROUP_LINK = "https://chat.whatsapp.com/BlXfChwXszFHroaBEUDnw8"
 
 # --- LISTA DE LÍDERES ---
 LIDERES = {
-    "David": "David",
-    "Susana": "Susana", 
-    "Alejo": "Alejo",
-    "Andres": "Andrés"
+    "david": "David",
+    "susana": "Susana",
+    "alejo": "Alejo",
+    "andres": "Andrés"
 }
+
 
 # --- LOCALIDADES DE BOGOTÁ ---
 LOCALIDADES_BOGOTA = [
