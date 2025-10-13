@@ -20,7 +20,7 @@
         }
         .header {
             text-align: center;
-            margin-bottom: 25px;
+            margin-bottom: 15px;
         }
         .header h1 {
             color: #8A2BE2;
@@ -31,11 +31,47 @@
             color: #6A0DAD;
             font-size: 16px;
             margin-top: 5px;
+            margin-bottom: 15px;
         }
         .camello-icon {
             font-size: 40px;
             margin: 10px 0;
         }
+        
+        /* Redes sociales - SOLO ICONOS */
+        .redes-sociales {
+            text-align: center;
+            margin: 15px 0 25px 0;
+        }
+        .redes-titulo {
+            color: #6A0DAD;
+            font-size: 14px;
+            margin-bottom: 10px;
+            font-weight: bold;
+        }
+        .social-links {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+        }
+        .social-btn {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 50px;
+            height: 50px;
+            background: #8A2BE2;
+            color: white;
+            text-decoration: none;
+            border-radius: 50%;
+            font-size: 20px;
+            transition: all 0.3s;
+        }
+        .social-btn:hover {
+            background: #6A0DAD;
+            transform: translateY(-3px);
+        }
+        
         .form-group { 
             margin-bottom: 20px; 
         }
@@ -128,46 +164,6 @@
             color: #8A2BE2;
             font-weight: bold;
         }
-        /* Estilos para redes sociales */
-        .redes-sociales {
-            text-align: center;
-            margin: 20px 0;
-            padding: 20px;
-            background: #F8F0FF;
-            border-radius: 10px;
-            border: 2px solid #E6E6FA;
-        }
-        .redes-titulo {
-            color: #8A2BE2;
-            font-weight: bold;
-            margin-bottom: 15px;
-            font-size: 18px;
-        }
-        .social-links {
-            display: flex;
-            justify-content: center;
-            gap: 15px;
-            flex-wrap: wrap;
-        }
-        .social-btn {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            padding: 10px 20px;
-            background: #8A2BE2;
-            color: white;
-            text-decoration: none;
-            border-radius: 25px;
-            font-weight: bold;
-            transition: all 0.3s;
-        }
-        .social-btn:hover {
-            background: #6A0DAD;
-            transform: translateY(-2px);
-        }
-        .social-icon {
-            font-size: 18px;
-        }
     </style>
 </head>
 <body>
@@ -176,21 +172,21 @@
             <div class="camello-icon">🐪</div>
             <h1>Únete al equipo de Alejo</h1>
             <div class="subtitle">¡Forma parte de nuestra comunidad!</div>
-        </div>
-
-        <!-- SECCIÓN DE REDES SOCIALES DE ALEJO -->
-        <div class="redes-sociales">
-            <div class="redes-titulo">📱 Conoce a Alejo - Sígueme en:</div>
-            <div class="social-links">
-                <a href="https://www.instagram.com/ajaramillo25/" class="social-btn" target="_blank">
-                    <span class="social-icon">📷</span> Instagram
-                </a>
-                <a href="https://x.com/ajaramillo25" class="social-btn" target="_blank">
-                    <span class="social-icon">🐦</span> Twitter/X
-                </a>
-                <a href="https://www.tiktok.com/@ajaramillof25" class="social-btn" target="_blank">
-                    <span class="social-icon">🎵</span> TikTok
-                </a>
+            
+            <!-- REDES SOCIALES - SOLO ICONOS, DEBAJO DEL TÍTULO -->
+            <div class="redes-sociales">
+                <div class="redes-titulo">Sígueme en:</div>
+                <div class="social-links">
+                    <a href="https://www.instagram.com/ajaramillo25/" class="social-btn" target="_blank" title="Instagram">
+                        📷
+                    </a>
+                    <a href="https://x.com/ajaramillo25" class="social-btn" target="_blank" title="Twitter/X">
+                        🐦
+                    </a>
+                    <a href="https://www.tiktok.com/@ajaramillof25" class="social-btn" target="_blank" title="TikTok">
+                        🎵
+                    </a>
+                </div>
             </div>
         </div>
         
