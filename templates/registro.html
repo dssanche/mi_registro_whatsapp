@@ -1,170 +1,147 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Únete a Nuestra Comunidad</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <title>Registro - Unete al equipo</title>
     <style>
-        .camel-background {
-            background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><path fill="%239C27B0" d="M50,20 Q60,10 70,20 Q80,30 75,40 Q70,50 65,45 Q60,40 55,45 Q50,50 45,45 Q40,40 35,45 Q30,50 25,40 Q20,30 30,20 Q40,10 50,20 Z"/></svg>');
-            background-size: 150px;
-            background-position: 95% 95%;
-            background-repeat: no-repeat;
-            background-attachment: fixed;
-            min-height: 100vh;
-            padding: 20px;
-            font-family: Arial, sans-serif;
+        body { 
+            font-family: Arial, sans-serif; 
+            max-width: 600px; 
+            margin: 0 auto; 
+            padding: 20px; 
         }
-        
-        .form-container {
-            max-width: 500px;
-            margin: 0 auto;
-            background: white;
-            padding: 30px;
-            border-radius: 15px;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        .form-group { 
+            margin-bottom: 15px; 
         }
-        
-        .form-group {
-            margin-bottom: 20px;
+        label { 
+            display: block; 
+            margin-bottom: 5px; 
         }
-        
-        label {
-            display: block;
-            margin-bottom: 5px;
-            font-weight: bold;
-            color: #333;
+        input, select { 
+            width: 100%; 
+            padding: 8px; 
+            border: 1px solid #ddd; 
+            border-radius: 4px; 
         }
-        
-        input, select {
-            width: 100%;
-            padding: 10px;
-            border: 2px solid #ddd;
-            border-radius: 5px;
-            font-size: 16px;
-            box-sizing: border-box;
+        button { 
+            background-color: #25D366; 
+            color: white; 
+            padding: 10px 20px; 
+            border: none; 
+            border-radius: 4px; 
+            cursor: pointer; 
         }
-        
-        input:focus, select:focus {
-            border-color: #9C27B0;
-            outline: none;
+        .qr-section { 
+            text-align: center; 
+            margin: 20px 0; 
+            padding: 20px; 
+            border: 1px solid #ddd; 
+            border-radius: 8px; 
         }
-        
-        button {
-            width: 100%;
-            padding: 12px;
-            background: #9C27B0;
-            color: white;
-            border: none;
-            border-radius: 5px;
-            font-size: 18px;
-            cursor: pointer;
-            transition: background 0.3s;
+        .qr-image { 
+            max-width: 200px; 
+            margin: 10px auto; 
         }
-        
-        button:hover {
-            background: #7B1FA2;
-        }
-        
-        .social-icons {
-            text-align: center;
-            margin: 20px 0;
-            padding: 20px;
-            border-top: 1px solid #eee;
-        }
-        
-        .social-icons a {
-            margin: 0 15px;
-            font-size: 24px;
-            transition: transform 0.3s;
-            text-decoration: none;
-        }
-        
-        .social-icons a:hover {
-            transform: scale(1.2);
-        }
-        
-        .lider-info {
-            background: #E1BEE7;
+        .link-section {
+            background-color: #f5f5f5;
             padding: 15px;
             border-radius: 8px;
             margin: 15px 0;
-            text-align: center;
+            word-break: break-all;
         }
     </style>
 </head>
-<body class="camel-background">
-    <div class="form-container">
-        <h2 style="text-align: center; color: #9C27B0;">🎯 Únete a Nuestra Comunidad</h2>
-        
-        <!-- Líder seleccionado -->
-        {% if lider_seleccionado %}
-        <div class="lider-info">
-            <strong>Te estás uniendo al equipo de:</strong><br>
-            <span style="font-size: 20px; color: #7B1FA2;">{{ lideres[lider_seleccionado] }}</span>
+<body>
+    <h1>Únete al equipo</h1>
+    
+    <form action="/registro" method="POST">
+        <div class="form-group">
+            <label for="lider">Selecciona tu líder:</label>
+            <select id="lider" name="lider" onchange="actualizarQR()">
+                <option value="">-- Selecciona un líder --</option>
+                {% for id, nombre in lideres.items() %}
+                    <option value="{{ id }}" {% if lider_seleccionado == id %}selected{% endif %}>
+                        {{ nombre }}
+                    </option>
+                {% endfor %}
+            </select>
         </div>
-        {% endif %}
-        
-        <form action="/registro" method="POST">
-            <div class="form-group">
-                <label for="nombre">Nombre completo *</label>
-                <input type="text" id="nombre" name="nombre" placeholder="Ej: María González" required>
+
+        <!-- Sección del QR (se muestra solo cuando se selecciona un líder) -->
+        <div id="qrSection" class="qr-section" style="display: none;">
+            <h3>Escanea el QR para compartir</h3>
+            <div id="qrContainer">
+                <!-- El QR se cargará aquí -->
             </div>
-            
-            <div class="form-group">
-                <label for="telefono">Número de WhatsApp *</label>
-                <input type="tel" id="telefono" name="telefono" placeholder="Ej: 573001234567" required>
-            </div>
-            
-            <div class="form-group">
-                <label for="nacimiento">Fecha de nacimiento *</label>
-                <input type="date" id="nacimiento" name="nacimiento" required>
-            </div>
-            
-            <div class="form-group">
-                <label for="localidad">Localidad en Bogotá *</label>
-                <select id="localidad" name="localidad" required>
-                    <option value="">Selecciona tu localidad</option>
-                    {% for localidad in localidades %}
-                    <option value="{{ localidad }}">{{ localidad }}</option>
-                    {% endfor %}
-                </select>
-            </div>
-            
-            <div class="form-group">
-                <label for="lider">Selecciona tu líder *</label>
-                <select id="lider" name="lider" required>
-                    <option value="">Selecciona tu líder</option>
-                    {% for id, nombre in lideres.items() %}
-                    <option value="{{ id }}" {% if lider_seleccionado == id %}selected{% endif %}>{{ nombre }}</option>
-                    {% endfor %}
-                </select>
-            </div>
-            
-            <button type="submit">🎯 Unirme al Grupo de WhatsApp</button>
-        </form>
-        
-        <!-- Redes Sociales -->
-        <div class="social-icons">
-            <h4>Síguenos en redes sociales:</h4>
-            <div>
-                <a href="https://x.com/ajaramillo25" target="_blank" style="color: #000;">
-                    <i class="fab fa-twitter"></i>
-                </a>
-                <a href="https://www.instagram.com/ajaramillo25/" target="_blank" style="color: #E4405F;">
-                    <i class="fab fa-instagram"></i>
-                </a>
-                <a href="https://www.tiktok.com/@ajaramillof25" target="_blank" style="color: #000;">
-                    <i class="fab fa-tiktok"></i>
-                </a>
+            <div class="link-section">
+                <strong>Link directo:</strong><br>
+                <span id="directLink"></span>
+                <button type="button" onclick="copiarLink()">Copiar Link</button>
             </div>
         </div>
-        
-        <!-- Enlace a estadísticas -->
-        <div style="text-align: center; margin-top: 20px;">
-            <a href="/estadisticas" style="color: #9C27B0; text-decoration: none;">
-                📊 Ver estadísticas de la comunidad
-            </a>
+
+        <div class="form-group">
+            <label for="nombre">Nombre completo:</label>
+            <input type="text" id="nombre" name="nombre" required>
         </div>
-    </div>
+
+        <div class="form-group">
+            <label for="telefono">Teléfono:</label>
+            <input type="tel" id="telefono" name="telefono" required>
+        </div>
+
+        <div class="form-group">
+            <label for="edad">Edad:</label>
+            <input type="number" id="edad" name="edad" required>
+        </div>
+
+        <div class="form-group">
+            <label for="nacimiento">Fecha de nacimiento:</label>
+            <input type="date" id="nacimiento" name="nacimiento" required>
+        </div>
+
+        <button type="submit">Unirse al grupo de WhatsApp</button>
+    </form>
+
+    <script>
+        function actualizarQR() {
+            const liderSelect = document.getElementById('lider');
+            const liderId = liderSelect.value;
+            const qrSection = document.getElementById('qrSection');
+            const qrContainer = document.getElementById('qrContainer');
+            const directLink = document.getElementById('directLink');
+
+            if (liderId) {
+                // Mostrar sección del QR
+                qrSection.style.display = 'block';
+                
+                // Generar URL del formulario con el líder seleccionado
+                const baseUrl = window.location.origin;
+                const formUrl = `${baseUrl}/?lider=${liderId}`;
+                
+                // Actualizar link directo
+                directLink.textContent = formUrl;
+                
+                // Cargar imagen QR
+                qrContainer.innerHTML = `<img src="/qr/${liderId}" alt="QR Code" class="qr-image">`;
+            } else {
+                qrSection.style.display = 'none';
+            }
+        }
+
+        function copiarLink() {
+            const linkText = document.getElementById('directLink').textContent;
+            navigator.clipboard.writeText(linkText).then(function() {
+                alert('Link copiado al portapapeles!');
+            });
+        }
+
+        // Inicializar QR si ya hay un líder seleccionado
+        document.addEventListener('DOMContentLoaded', function() {
+            const liderSelect = document.getElementById('lider');
+            if (liderSelect.value) {
+                actualizarQR();
+            }
+        });
+    </script>
 </body>
 </html>
