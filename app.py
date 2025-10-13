@@ -11,52 +11,43 @@ import requests
 app = Flask(__name__)
 
 # --- CONFIGURACIÓN GOOGLE SHEETS ---
-S# --- CONFIGURACIÓN GOOGLE SHEETS SIMPLIFICADA ---
+# --- CONFIGURACIÓN GOOGLE SHEETS SIMPLIFICADA ---
 SCOPE = [
     "https://spreadsheets.google.com/feeds",
     "https://www.googleapis.com/auth/drive"
 ]
 
-def init_google_sheets():
-    """Inicializa conexión con Google Sheets usando variables de entorno"""
+def get_sheet_connection():
+    """Conexión simple y robusta a Google Sheets"""
     try:
-        # Verificar que todas las variables necesarias estén presentes
-        required_vars = ['GCP_TYPE', 'GCP_PROJECT_ID', 'GCP_PRIVATE_KEY', 
-                        'GCP_PRIVATE_KEY_ID', 'GCP_CLIENT_EMAIL', 'GCP_CLIENT_ID',
-                        'GCP_CLIENT_X509_CERT_URL']
-        
-        missing_vars = [var for var in required_vars if var not in os.environ]
-        if missing_vars:
-            print(f"❌ Variables faltantes: {missing_vars}")
+        # Solo verificar las variables absolutamente necesarias
+        if not all([os.environ.get('GCP_PRIVATE_KEY'), os.environ.get('GCP_CLIENT_EMAIL')]):
+            print("❌ Variables esenciales faltantes")
             return None
-        
+            
         service_account_info = {
-            "type": os.environ['GCP_TYPE'],
-            "project_id": os.environ['GCP_PROJECT_ID'],
-            "private_key_id": os.environ['GCP_PRIVATE_KEY_ID'],
+            "type": "service_account",
+            "project_id": os.environ.get('GCP_PROJECT_ID', ''),
+            "private_key_id": os.environ.get('GCP_PRIVATE_KEY_ID', ''),
             "private_key": os.environ['GCP_PRIVATE_KEY'].replace('\\n', '\n'),
             "client_email": os.environ['GCP_CLIENT_EMAIL'],
-            "client_id": os.environ['GCP_CLIENT_ID'],
+            "client_id": os.environ.get('GCP_CLIENT_ID', ''),
             "auth_uri": "https://accounts.google.com/o/oauth2/auth",
-            "token_uri": "https://oauth2.googleapis.com/token",
+            "token_uri": "https://oauth2.googleapis.com/token", 
             "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
-            "client_x509_cert_url": os.environ['GCP_CLIENT_X509_CERT_URL'],
-            "universe_domain": "googleapis.com"
+            "client_x509_cert_url": os.environ.get('GCP_CLIENT_X509_CERT_URL', ''),
         }
         
         creds = ServiceAccountCredentials.from_json_keyfile_dict(service_account_info, SCOPE)
         client = gspread.authorize(creds)
-        sheet = client.open_by_key("1pLwMJlZpaUTwTaXBEZJK_9dGoUecP1UJt2b3ylDpZac").sheet1
-        print("✅ Google Sheets conectado exitosamente")
-        return sheet
+        return client.open_by_key("1pLwMJlZpaUTwTaXBEZJK_9dGoUecP1UJt2b3ylDpZac").sheet1
         
     except Exception as e:
-        print(f"❌ Error inicializando Google Sheets: {e}")
+        print(f"❌ Error conexión Google Sheets: {e}")
         return None
 
-# Inicializar la conexión
-sheet = init_google_sheets()
-
+sheet = get_sheet_connection()
+# --- ENLACE AL GRUPO DE WHATSAPP ---
 WHATSAPP_GROUP_LINK = "https://chat.whatsapp.com/BlXfChwXszFHroaBEUDnw8"
 
 # --- LISTA DE LÍDERES ---
