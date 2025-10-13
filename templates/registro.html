@@ -1,63 +1,170 @@
 <!DOCTYPE html>
-<html lang="es">
+<html>
 <head>
-  <meta charset="UTF-8">
-  <title>Registro al grupo</title>
-  <style>
-    body { 
-      font-family: Arial, sans-serif; 
-      background-color: #f6f7fb;
-      display: flex; 
-      justify-content: center; 
-      align-items: center; 
-      height: 100vh;
-    }
-    form { 
-      background: white; 
-      padding: 30px; 
-      border-radius: 15px;
-      box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-      width: 320px;
-    }
-    h2 { text-align: center; color: #333; }
-    label { display: block; margin-top: 10px; font-weight: bold; }
-    input, select {
-      width: 100%; padding: 8px; margin-top: 5px;
-      border: 1px solid #ccc; border-radius: 8px;
-    }
-    button {
-      width: 100%; margin-top: 15px; padding: 10px;
-      background-color: #25D366; color: white; border: none;
-      border-radius: 8px; cursor: pointer; font-size: 16px;
-    }
-    button:hover { background-color: #20b958; }
-  </style>
+    <title>Únete a Nuestra Comunidad</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        .camel-background {
+            background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><path fill="%239C27B0" d="M50,20 Q60,10 70,20 Q80,30 75,40 Q70,50 65,45 Q60,40 55,45 Q50,50 45,45 Q40,40 35,45 Q30,50 25,40 Q20,30 30,20 Q40,10 50,20 Z"/></svg>');
+            background-size: 150px;
+            background-position: 95% 95%;
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+            min-height: 100vh;
+            padding: 20px;
+            font-family: Arial, sans-serif;
+        }
+        
+        .form-container {
+            max-width: 500px;
+            margin: 0 auto;
+            background: white;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+        
+        .form-group {
+            margin-bottom: 20px;
+        }
+        
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+            color: #333;
+        }
+        
+        input, select {
+            width: 100%;
+            padding: 10px;
+            border: 2px solid #ddd;
+            border-radius: 5px;
+            font-size: 16px;
+            box-sizing: border-box;
+        }
+        
+        input:focus, select:focus {
+            border-color: #9C27B0;
+            outline: none;
+        }
+        
+        button {
+            width: 100%;
+            padding: 12px;
+            background: #9C27B0;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            font-size: 18px;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+        
+        button:hover {
+            background: #7B1FA2;
+        }
+        
+        .social-icons {
+            text-align: center;
+            margin: 20px 0;
+            padding: 20px;
+            border-top: 1px solid #eee;
+        }
+        
+        .social-icons a {
+            margin: 0 15px;
+            font-size: 24px;
+            transition: transform 0.3s;
+            text-decoration: none;
+        }
+        
+        .social-icons a:hover {
+            transform: scale(1.2);
+        }
+        
+        .lider-info {
+            background: #E1BEE7;
+            padding: 15px;
+            border-radius: 8px;
+            margin: 15px 0;
+            text-align: center;
+        }
+    </style>
 </head>
-<body>
-  <form action="/registro" method="POST">
-    <h2>Únete al grupo</h2>
-
-    <label>Nombre:</label>
-    <input type="text" name="nombre" required>
-
-    <label>Teléfono:</label>
-    <input type="tel" name="telefono" required>
-
-    <label>Edad:</label>
-    <input type="number" name="edad" required>
-
-    <label>Fecha de nacimiento:</label>
-    <input type="date" name="nacimiento" required>
-
-    <label>Líder:</label>
-    <select name="lider" required>
-      <option value="David">David</option>
-      <option value="Susana">Susana</option>
-      <option value="Alejo">Alejo</option>
-      <option value="Andrés">Andrés</option>
-    </select>
-
-    <button type="submit">Unirme al grupo</button>
-  </form>
+<body class="camel-background">
+    <div class="form-container">
+        <h2 style="text-align: center; color: #9C27B0;">🎯 Únete a Nuestra Comunidad</h2>
+        
+        <!-- Líder seleccionado -->
+        {% if lider_seleccionado %}
+        <div class="lider-info">
+            <strong>Te estás uniendo al equipo de:</strong><br>
+            <span style="font-size: 20px; color: #7B1FA2;">{{ lideres[lider_seleccionado] }}</span>
+        </div>
+        {% endif %}
+        
+        <form action="/registro" method="POST">
+            <div class="form-group">
+                <label for="nombre">Nombre completo *</label>
+                <input type="text" id="nombre" name="nombre" placeholder="Ej: María González" required>
+            </div>
+            
+            <div class="form-group">
+                <label for="telefono">Número de WhatsApp *</label>
+                <input type="tel" id="telefono" name="telefono" placeholder="Ej: 573001234567" required>
+            </div>
+            
+            <div class="form-group">
+                <label for="nacimiento">Fecha de nacimiento *</label>
+                <input type="date" id="nacimiento" name="nacimiento" required>
+            </div>
+            
+            <div class="form-group">
+                <label for="localidad">Localidad en Bogotá *</label>
+                <select id="localidad" name="localidad" required>
+                    <option value="">Selecciona tu localidad</option>
+                    {% for localidad in localidades %}
+                    <option value="{{ localidad }}">{{ localidad }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+            
+            <div class="form-group">
+                <label for="lider">Selecciona tu líder *</label>
+                <select id="lider" name="lider" required>
+                    <option value="">Selecciona tu líder</option>
+                    {% for id, nombre in lideres.items() %}
+                    <option value="{{ id }}" {% if lider_seleccionado == id %}selected{% endif %}>{{ nombre }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+            
+            <button type="submit">🎯 Unirme al Grupo de WhatsApp</button>
+        </form>
+        
+        <!-- Redes Sociales -->
+        <div class="social-icons">
+            <h4>Síguenos en redes sociales:</h4>
+            <div>
+                <a href="https://x.com/ajaramillo25" target="_blank" style="color: #000;">
+                    <i class="fab fa-twitter"></i>
+                </a>
+                <a href="https://www.instagram.com/ajaramillo25/" target="_blank" style="color: #E4405F;">
+                    <i class="fab fa-instagram"></i>
+                </a>
+                <a href="https://www.tiktok.com/@ajaramillof25" target="_blank" style="color: #000;">
+                    <i class="fab fa-tiktok"></i>
+                </a>
+            </div>
+        </div>
+        
+        <!-- Enlace a estadísticas -->
+        <div style="text-align: center; margin-top: 20px;">
+            <a href="/estadisticas" style="color: #9C27B0; text-decoration: none;">
+                📊 Ver estadísticas de la comunidad
+            </a>
+        </div>
+    </div>
 </body>
 </html>

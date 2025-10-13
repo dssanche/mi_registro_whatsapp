@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Únete con {{ lider_nombre }}</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+<body>
+    <h2>🎯 Únete al equipo de {{ lider_nombre }}</h2>
+    <p>Escanea el QR o haz clic en el link:</p>
+    
+    <img src="{{ qr_url }}" alt="QR para unirse" style="max-width: 300px;">
+    
+    <p>
+        <strong>Link directo:</strong><br>
+        <a href="{{ url_formulario }}" style="font-size: 18px;">
+            {{ url_formulario }}
+        </a>
+    </p>
+    
+    <button onclick="navigator.clipboard.writeText('{{ url_formulario }}')">
+        📋 Copiar Link
+    </button>
+</body>
+</html>
