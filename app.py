@@ -10,7 +10,6 @@ import requests
 
 app = Flask(__name__)
 
-# --- CONFIGURACIÓN GOOGLE SHEETS CON DEBUG ---
 # --- CONFIGURACIÓN MÍNIMA DE GOOGLE SHEETS ---
 SCOPE = [
     "https://spreadsheets.google.com/feeds",
@@ -257,16 +256,24 @@ def ver_todos_qr():
 
 @app.route('/compartir/<lider_id>')
 def compartir_link(lider_id):
-    if lider_id not in LIDERES:
-        return "Líder no encontrado", 404
-    
+    lider_id_normalizado = lider_id.lower().replace("á", "a").replace("é", "e").replace("í", "i").replace("ó", "o").replace("ú", "u")
+    lideres_normalizados = {k.lower(): v for k, v in LIDERES.items()}
+
+    lider_nombre = lideres_normalizados.get(lider_id_normalizado)
+    if not lider_nombre:
+        return f"Líder '{lider_id}' no encontrado", 404
+
     base_url = get_base_url()
-    url_formulario = f"{base_url}/?lider={lider_id}"
-    
-    return render_template('compartir.html', 
-                         lider_nombre=LIDERES[lider_id],
-                         url_formulario=url_formulario,
-                         qr_url=f"/qr/{lider_id}")
+    url_formulario = f"{base_url}/?lider={lider_id_normalizado}"
+    qr_url = f"/qr/{lider_id_normalizado}"
+
+    return render_template(
+        'compartir.html',
+        lider_nombre=lider_nombre,
+        url_formulario=url_formulario,
+        qr_url=qr_url
+    )
+
 
 # Nueva ruta para estadísticas básicas
 @app.route('/estadisticas')
