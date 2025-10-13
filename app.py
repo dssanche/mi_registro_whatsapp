@@ -11,14 +11,25 @@ import requests
 app = Flask(__name__)
 
 # --- CONFIGURACIÓN GOOGLE SHEETS ---
+S# --- CONFIGURACIÓN GOOGLE SHEETS SIMPLIFICADA ---
 SCOPE = [
     "https://spreadsheets.google.com/feeds",
     "https://www.googleapis.com/auth/drive"
 ]
 
-# Configuración segura de credenciales
-def get_google_credentials():
-    if all(key in os.environ for key in ['GCP_TYPE', 'GCP_PROJECT_ID', 'GCP_PRIVATE_KEY']):
+def init_google_sheets():
+    """Inicializa conexión con Google Sheets usando variables de entorno"""
+    try:
+        # Verificar que todas las variables necesarias estén presentes
+        required_vars = ['GCP_TYPE', 'GCP_PROJECT_ID', 'GCP_PRIVATE_KEY', 
+                        'GCP_PRIVATE_KEY_ID', 'GCP_CLIENT_EMAIL', 'GCP_CLIENT_ID',
+                        'GCP_CLIENT_X509_CERT_URL']
+        
+        missing_vars = [var for var in required_vars if var not in os.environ]
+        if missing_vars:
+            print(f"❌ Variables faltantes: {missing_vars}")
+            return None
+        
         service_account_info = {
             "type": os.environ['GCP_TYPE'],
             "project_id": os.environ['GCP_PROJECT_ID'],
@@ -32,19 +43,19 @@ def get_google_credentials():
             "client_x509_cert_url": os.environ['GCP_CLIENT_X509_CERT_URL'],
             "universe_domain": "googleapis.com"
         }
-        return ServiceAccountCredentials.from_json_keyfile_dict(service_account_info, SCOPE)
-    elif os.path.exists("creds.json"):
-        return ServiceAccountCredentials.from_json_keyfile_name("creds.json", SCOPE)
-    else:
-        raise Exception("No se encontraron credenciales de Google Cloud")
+        
+        creds = ServiceAccountCredentials.from_json_keyfile_dict(service_account_info, SCOPE)
+        client = gspread.authorize(creds)
+        sheet = client.open_by_key("1pLwMJlZpaUTwTaXBEZJK_9dGoUecP1UJt2b3ylDpZac").sheet1
+        print("✅ Google Sheets conectado exitosamente")
+        return sheet
+        
+    except Exception as e:
+        print(f"❌ Error inicializando Google Sheets: {e}")
+        return None
 
-try:
-    creds = get_google_credentials()
-    client = gspread.authorize(creds)
-    sheet = client.open_by_key("1pLwMJlZpaUTwTaXBEZJK_9dGoUecP1UJt2b3ylDpZac").sheet1
-except Exception as e:
-    print(f"Error inicializando Google Sheets: {e}")
-    sheet = None
+# Inicializar la conexión
+sheet = init_google_sheets()
 
 WHATSAPP_GROUP_LINK = "https://chat.whatsapp.com/BlXfChwXszFHroaBEUDnw8"
 
