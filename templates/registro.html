@@ -128,6 +128,46 @@
             color: #8A2BE2;
             font-weight: bold;
         }
+        /* Estilos para redes sociales */
+        .redes-sociales {
+            text-align: center;
+            margin: 20px 0;
+            padding: 20px;
+            background: #F8F0FF;
+            border-radius: 10px;
+            border: 2px solid #E6E6FA;
+        }
+        .redes-titulo {
+            color: #8A2BE2;
+            font-weight: bold;
+            margin-bottom: 15px;
+            font-size: 18px;
+        }
+        .social-links {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+        .social-btn {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 10px 20px;
+            background: #8A2BE2;
+            color: white;
+            text-decoration: none;
+            border-radius: 25px;
+            font-weight: bold;
+            transition: all 0.3s;
+        }
+        .social-btn:hover {
+            background: #6A0DAD;
+            transform: translateY(-2px);
+        }
+        .social-icon {
+            font-size: 18px;
+        }
     </style>
 </head>
 <body>
@@ -136,6 +176,22 @@
             <div class="camello-icon">🐪</div>
             <h1>Únete al equipo de Alejo</h1>
             <div class="subtitle">¡Forma parte de nuestra comunidad!</div>
+        </div>
+
+        <!-- SECCIÓN DE REDES SOCIALES DE ALEJO -->
+        <div class="redes-sociales">
+            <div class="redes-titulo">📱 Conoce a Alejo - Sígueme en:</div>
+            <div class="social-links">
+                <a href="https://www.instagram.com/ajaramillo25/" class="social-btn" target="_blank">
+                    <span class="social-icon">📷</span> Instagram
+                </a>
+                <a href="https://x.com/ajaramillo25" class="social-btn" target="_blank">
+                    <span class="social-icon">🐦</span> Twitter/X
+                </a>
+                <a href="https://www.tiktok.com/@ajaramillof25" class="social-btn" target="_blank">
+                    <span class="social-icon">🎵</span> TikTok
+                </a>
+            </div>
         </div>
         
         <form action="/registro" method="POST">
@@ -270,15 +326,12 @@
                          class="qr-image"
                          onerror="mostrarPlaceholderQR(this, '${liderId}')">
                 `;
-                
-                console.log("Intentando cargar QR desde:", qrUrl);
             } else {
                 qrSection.style.display = 'none';
             }
         }
 
         function mostrarPlaceholderQR(imgElement, liderId) {
-            console.log("Error cargando QR, mostrando placeholder");
             const qrContainer = document.getElementById('qrContainer');
             qrContainer.innerHTML = `
                 <div class="qr-placeholder">

@@ -306,7 +306,6 @@ def compartir_link(lider_id):
         qr_url=qr_url
     )
 
-
 # Nueva ruta para estadísticas básicas
 @app.route('/estadisticas')
 def mostrar_estadisticas():
@@ -335,7 +334,20 @@ def mostrar_estadisticas():
     
     except Exception as e:
         return f"Error obteniendo estadísticas: {e}", 500
-
+    
+    
+    
+@app.route('/compartir/<lider_id>')
+def compartir(lider_id):
+    if lider_id not in LIDERES:
+        return "Líder no encontrado", 404
+    
+    base_url = get_base_url()
+    
+    return render_template('compartir.html', 
+                         lider_nombre=LIDERES[lider_id],
+                         qr_url=f"/qr/{lider_id}",
+                         url_formulario=f"{base_url}/?lider={lider_id}")
 if __name__ == '__main__':
     if 'RENDER' in os.environ:
         port = int(os.environ.get('PORT', 5000))
