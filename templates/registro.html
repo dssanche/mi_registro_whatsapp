@@ -164,6 +164,10 @@
             color: #8A2BE2;
             font-weight: bold;
         }
+        .loading {
+            color: #8A2BE2;
+            font-style: italic;
+        }
     </style>
 </head>
 <body>
@@ -208,7 +212,7 @@
             <div id="qrSection" class="qr-section" style="display: none;">
                 <h3 style="color: #8A2BE2;">📱 Escanea el QR para compartir</h3>
                 <div id="qrContainer">
-                    <!-- El QR se cargará aquí -->
+                    <div class="loading">Cargando QR...</div>
                 </div>
                 <div class="link-section">
                     <strong>🔗 Link directo:</strong><br>
@@ -312,22 +316,24 @@
                 // Actualizar link directo
                 directLink.textContent = formUrl;
                 
-                // Intentar cargar el QR dinámico
-                const qrUrl = `/qr/${liderId}`;
-                const timestamp = new Date().getTime();
+                // USAR SERVICIO EXTERNO PARA GENERAR QR (MÁS CONFIABLE)
+                const qrExternoUrl = `https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=${encodeURIComponent(formUrl)}`;
                 
                 qrContainer.innerHTML = `
-                    <img src="${qrUrl}?t=${timestamp}" 
+                    <img src="${qrExternoUrl}" 
                          alt="QR Code para ${liderId}" 
                          class="qr-image"
-                         onerror="mostrarPlaceholderQR(this, '${liderId}')">
+                         onload="console.log('QR cargado exitosamente')"
+                         onerror="mostrarPlaceholderQR()">
                 `;
+                
+                console.log("Generando QR con servicio externo:", qrExternoUrl);
             } else {
                 qrSection.style.display = 'none';
             }
         }
 
-        function mostrarPlaceholderQR(imgElement, liderId) {
+        function mostrarPlaceholderQR() {
             const qrContainer = document.getElementById('qrContainer');
             qrContainer.innerHTML = `
                 <div class="qr-placeholder">
