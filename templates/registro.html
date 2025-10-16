@@ -1,265 +1,214 @@
 <!DOCTYPE html>
-<html>
+<html lang="es">
 <head>
-    <title>Registro - 🐪 Únete al equipo de Team Alejo el del Camello 🐪</title>
+    <meta charset="UTF-8">
+    <title>🐪 Registro - Team Alejo el del Camello 🐪</title>
     <style>
-        body { 
-            font-family: 'Arial', sans-serif; 
-            max-width: 600px; 
-            margin: 0 auto; 
-            padding: 20px;
+        body {
+            font-family: 'Arial', sans-serif;
             background: linear-gradient(135deg, #8A2BE2, #6A0DAD);
+            margin: 0;
+            padding: 0;
             color: #333;
         }
         .container {
-            background: white;
-            border-radius: 15px;
+            max-width: 600px;
+            margin: 40px auto;
+            background: #fff;
             padding: 30px;
+            border-radius: 15px;
             box-shadow: 0 10px 30px rgba(0,0,0,0.3);
-            margin-top: 20px;
         }
-        .header {
-            text-align: center;
-            margin-bottom: 15px;
-        }
-        .header h1 {
-            color: #8A2BE2;
-            margin: 0;
-            font-size: 28px;
-        }
-        .header .subtitle {
+        h1 {
             color: #6A0DAD;
-            font-size: 16px;
-            margin-top: 5px;
-            margin-bottom: 15px;
-        }
-        .camello-icon {
-            font-size: 40px;
-            margin: 10px 0;
-        }
-
-        .redes-sociales {
             text-align: center;
-            margin: 15px 0 25px 0;
         }
-        .redes-titulo {
-            color: #6A0DAD;
-            font-size: 14px;
-            margin-bottom: 10px;
-            font-weight: bold;
-        }
-        .social-links {
-            display: flex;
-            justify-content: center;
-            gap: 20px;
-        }
-        .social-btn {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            width: 50px;
-            height: 50px;
-            background: #8A2BE2;
-            color: white;
-            text-decoration: none;
-            border-radius: 50%;
-            font-size: 20px;
-            transition: all 0.3s;
-        }
-        .social-btn:hover {
-            background: #6A0DAD;
-            transform: translateY(-3px);
-        }
-
-        .form-group { margin-bottom: 20px; }
-        label { 
-            display: block; 
-            margin-bottom: 8px; 
+        label {
+            display: block;
+            margin-top: 15px;
             font-weight: bold;
             color: #6A0DAD;
         }
-        input, select { 
-            width: 100%; 
-            padding: 12px; 
-            border: 2px solid #E6E6FA;
-            border-radius: 8px; 
-            box-sizing: border-box;
-            font-size: 16px;
-            transition: border-color 0.3s;
-        }
-        input:focus, select:focus {
-            border-color: #8A2BE2;
-            outline: none;
-            box-shadow: 0 0 5px rgba(138, 43, 226, 0.3);
-        }
-        button { 
-            background: linear-gradient(135deg, #8A2BE2, #6A0DAD);
-            color: white; 
-            padding: 15px; 
-            border: none; 
-            border-radius: 8px; 
-            cursor: pointer; 
-            font-size: 18px;
+        input, select, button {
             width: 100%;
+            padding: 12px;
+            border-radius: 8px;
+            border: 2px solid #E6E6FA;
+            margin-top: 5px;
+            font-size: 16px;
+        }
+        button {
+            background: linear-gradient(135deg, #8A2BE2, #6A0DAD);
+            color: #fff;
+            border: none;
+            margin-top: 20px;
+            cursor: pointer;
             font-weight: bold;
-            transition: transform 0.2s;
         }
         button:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 5px 15px rgba(138, 43, 226, 0.4);
+            background: #6A0DAD;
         }
-
-        .link-section {
-            background-color: #F0E6FF;
+        .copy-section {
+            background-color: #F3E8FF;
             padding: 15px;
             border-radius: 8px;
             margin: 15px 0;
-            word-break: break-all;
+            text-align: center;
+            color: #4B0082;
         }
         .copy-btn {
-            background: #9370DB;
-            padding: 8px 15px;
-            font-size: 14px;
-            width: auto;
-            margin-top: 10px;
-            border: none;
+            background: #8A2BE2;
             color: white;
+            border: none;
+            padding: 10px 18px;
             border-radius: 8px;
+            margin-top: 10px;
             cursor: pointer;
+            font-weight: bold;
         }
-        .footer {
-            text-align: center;
-            margin-top: 20px;
-            color: #8A2BE2;
-            font-size: 14px;
+        .copy-btn:hover {
+            background: #6A0DAD;
         }
         .edad-calculada {
             color: #25D366;
             font-weight: bold;
-            margin-top: 8px;
-            font-size: 14px;
+            margin-top: 5px;
         }
     </style>
 </head>
 <body>
-    <div class="container">
-        <div class="header">
-            <div class="camello-icon">🐪</div>
-            <h1>Únete al equipo de Alejo</h1>
-            <div class="subtitle">¡Forma parte de nuestra comunidad!</div>
 
-            <div class="redes-sociales">
-                <div class="redes-titulo">Sígueme en:</div>
-                <div class="social-links">
-                    <a href="https://www.instagram.com/alejoeldelcamello/" class="social-btn" target="_blank" title="Instagram">
-                        <img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/instagram.svg" alt="Instagram" width="28" height="28" style="filter: invert(1);" />
-                    </a>
-                    <a href="https://x.com/alejoeldelcamello" class="social-btn" target="_blank" title="X">
-                        <img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/x.svg" alt="X" width="28" height="28" style="filter: invert(1);" />
-                    </a>
-                    <a href="https://www.tiktok.com/@alejoeldelcamello" class="social-btn" target="_blank" title="TikTok">
-                        <img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/tiktok.svg" alt="TikTok" width="28" height="28" style="filter: invert(1);" />
-                    </a>
-                </div>
-            </div>
+<div class="container">
+    <h1>🐪 Únete al equipo de Alejo 🐪</h1>
+
+    <form id="registroForm" action="/registro" method="POST">
+        <!-- Campo visible para elegir líder -->
+        <label for="liderSelect">👑 Líder:</label>
+        <select id="liderSelect" name="liderSelect" required>
+            <option value="">-- Selecciona tu líder --</option>
+            <option value="alejo">Alejo</option>
+            <option value="maria">María</option>
+            <option value="juan">Juan</option>
+            <option value="camila">Camila</option>
+        </select>
+
+        <!-- Campo oculto que Flask recibe -->
+        <input type="hidden" id="lider" name="lider" value="{{ lider }}">
+
+        <div class="copy-section">
+            <strong>🔗 Link del líder:</strong>
+            <p id="linkDisplay"></p>
+            <button type="button" class="copy-btn" onclick="copiarLink()">📋 Copiar Link</button>
         </div>
 
-        <form action="/registro" method="POST">
-            <input type="hidden" name="lider" value="{{ lider }}">
+        <label>👤 Nombre completo:</label>
+        <input type="text" id="nombre" name="nombre" required>
 
-            <!-- Link compartible -->
-            {% if lider %}
-            <div class="link-section">
-                <strong>🔗 Link de registro de tu líder:</strong><br>
-                <span id="directLink">https://mi-registro-whatsapp-6.onrender.com/?lider={{ lider }}</span>
-                <button type="button" onclick="copiarLink()" class="copy-btn">📋 Copiar Link</button>
-            </div>
-            {% endif %}
+        <label>📞 Teléfono:</label>
+        <input type="tel" id="telefono" name="telefono" required>
 
-            <div class="form-group">
-                <label for="nombre">👤 Nombre completo:</label>
-                <input type="text" id="nombre" name="nombre" required>
-            </div>
+        <label>📅 Fecha de nacimiento:</label>
+        <input type="date" id="nacimiento" name="nacimiento" required>
+        <div id="edadDisplay" class="edad-calculada"></div>
 
-            <div class="form-group">
-                <label for="telefono">📞 Teléfono:</label>
-                <input type="tel" id="telefono" name="telefono" required>
-            </div>
+        <label>🏠 Localidad:</label>
+        <select id="localidad" name="localidad" required>
+            <option value="">-- Selecciona tu localidad --</option>
+            <option value="Bosa">Bosa</option>
+            <option value="Kennedy">Kennedy</option>
+            <option value="Suba">Suba</option>
+            <option value="Engativá">Engativá</option>
+            <option value="Fontibón">Fontibón</option>
+            <option value="Usme">Usme</option>
+            <option value="Ciudad Bolívar">Ciudad Bolívar</option>
+            <option value="Chapinero">Chapinero</option>
+            <option value="Otra">Otra</option>
+        </select>
 
-            <div class="form-group">
-                <label for="nacimiento">📅 Fecha de nacimiento:</label>
-                <input type="date" id="nacimiento" name="nacimiento" required>
-                <input type="hidden" id="edad" name="edad">
-                <div id="edad-display" class="edad-calculada"></div>
-            </div>
+        <input type="hidden" name="edad" id="edad" value="">
 
-            <div class="form-group">
-                <label for="localidad">🏠 Localidad:</label>
-                <select id="localidad" name="localidad" required>
-                    <option value="">-- Selecciona tu localidad --</option>
-                    <option value="Bosa">Bosa</option>
-                    <option value="Kennedy">Kennedy</option>
-                    <option value="Suba">Suba</option>
-                    <option value="Engativá">Engativá</option>
-                    <option value="Fontibón">Fontibón</option>
-                    <option value="Usme">Usme</option>
-                    <option value="Ciudad Bolívar">Ciudad Bolívar</option>
-                    <option value="San Cristóbal">San Cristóbal</option>
-                    <option value="Usaquén">Usaquén</option>
-                    <option value="Chapinero">Chapinero</option>
-                    <option value="Santa Fe">Santa Fe</option>
-                    <option value="Barrios Unidos">Barrios Unidos</option>
-                    <option value="Teusaquillo">Teusaquillo</option>
-                    <option value="Los Mártires">Los Mártires</option>
-                    <option value="Antonio Nariño">Antonio Nariño</option>
-                    <option value="Puente Aranda">Puente Aranda</option>
-                    <option value="Candelaria">Candelaria</option>
-                    <option value="Rafael Uribe">Rafael Uribe</option>
-                    <option value="Tunjuelito">Tunjuelito</option>
-                    <option value="Otra">Otra</option>
-                </select>
-            </div>
+        <button type="submit">✅ Unirse al grupo de WhatsApp</button>
+    </form>
+</div>
 
-            <button type="submit">✅ 🐪 Unirse al grupo de WhatsApp 🐪</button>
-        </form>
+<script>
+    const BASE_URL = "https://mi-registro-whatsapp-6.onrender.com";
 
-        <div class="footer">
-            <p>✨ Formulario de registro - 🐪 Team Alejo el del Camello 🐪</p>
-        </div>
-    </div>
+    // Si viene ?lider= en el URL, marcarlo automáticamente
+    document.addEventListener("DOMContentLoaded", () => {
+        const params = new URLSearchParams(window.location.search);
+        const lider = params.get("lider");
+        const select = document.getElementById("liderSelect");
+        const hiddenInput = document.getElementById("lider");
+        const linkDisplay = document.getElementById("linkDisplay");
 
-    <script>
-        // Calcular edad automáticamente
-        function calcularYMostrarEdad() {
-            const fechaNacimiento = document.getElementById('nacimiento');
-            const edadDisplay = document.getElementById('edad-display');
-            const edadInput = document.getElementById('edad');
+        if (lider) {
+            select.value = lider.toLowerCase();
+            hiddenInput.value = lider.toLowerCase();
+            const link = `${BASE_URL}/?lider=${lider}`;
+            linkDisplay.textContent = link;
+        } else {
+            linkDisplay.textContent = "Selecciona un líder para generar tu link.";
+        }
+    });
 
-            if (fechaNacimiento.value) {
-                const nacimiento = new Date(fechaNacimiento.value);
-                const hoy = new Date();
-                let edad = hoy.getFullYear() - nacimiento.getFullYear();
-                const mes = hoy.getMonth() - nacimiento.getMonth();
-                if (mes < 0 || (mes === 0 && hoy.getDate() < nacimiento.getDate())) edad--;
-                edadDisplay.textContent = `✅ Edad calculada: ${edad} años`;
-                edadInput.value = edad;
-            } else {
-                edadDisplay.textContent = '';
-                edadInput.value = '';
+    // Actualizar link cuando cambie el líder
+    document.getElementById("liderSelect").addEventListener("change", function() {
+        const lider = this.value;
+        const linkDisplay = document.getElementById("linkDisplay");
+        const hiddenInput = document.getElementById("lider");
+
+        if (lider) {
+            const link = `${BASE_URL}/?lider=${lider}`;
+            linkDisplay.textContent = link;
+            hiddenInput.value = lider;
+        } else {
+            linkDisplay.textContent = "Selecciona un líder para generar tu link.";
+        }
+    });
+
+    // Copiar link
+    function copiarLink() {
+        const text = document.getElementById("linkDisplay").textContent;
+        if (text.includes("http")) {
+            navigator.clipboard.writeText(text);
+            alert("✅ Link copiado al portapapeles!");
+        } else {
+            alert("⚠️ No hay link para copiar.");
+        }
+    }
+
+    // Calcular edad
+    document.getElementById("nacimiento").addEventListener("change", () => {
+        const nacimiento = document.getElementById("nacimiento").value;
+        const edadDisplay = document.getElementById("edadDisplay");
+        const edadInput = document.getElementById("edad");
+
+        if (nacimiento) {
+            const fechaNac = new Date(nacimiento);
+            const hoy = new Date();
+            let edad = hoy.getFullYear() - fechaNac.getFullYear();
+            const mes = hoy.getMonth() - fechaNac.getMonth();
+            if (mes < 0 || (mes === 0 && hoy.getDate() < fechaNac.getDate())) {
+                edad--;
             }
+            edadInput.value = edad;
+            edadDisplay.textContent = `✅ Edad calculada: ${edad} años`;
+        } else {
+            edadInput.value = "";
+            edadDisplay.textContent = "";
         }
+    });
 
-        // Copiar link al portapapeles
-        function copiarLink() {
-            const linkText = document.getElementById('directLink').textContent;
-            navigator.clipboard.writeText(linkText)
-                .then(() => alert('✅ Link copiado al portapapeles!'))
-                .catch(() => alert('⚠️ Error al copiar el link.'));
+    // Validación antes de enviar
+    document.getElementById("registroForm").addEventListener("submit", (e) => {
+        const lider = document.getElementById("lider").value;
+        if (!lider) {
+            e.preventDefault();
+            alert("⚠️ Por favor selecciona un líder antes de continuar.");
         }
+    });
+</script>
 
-        document.addEventListener('DOMContentLoaded', function() {
-            document.getElementById('nacimiento').addEventListener('change', calcularYMostrarEdad);
-        });
-    </script>
 </body>
 </html>
