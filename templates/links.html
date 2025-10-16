@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Generador de Links - 🐪 Team Alejo el del Camello 🐪</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background: linear-gradient(135deg, #8A2BE2, #6A0DAD);
+            color: #fff;
+            text-align: center;
+            padding: 40px;
+        }
+        .container {
+            background: #fff;
+            color: #333;
+            border-radius: 15px;
+            padding: 30px;
+            max-width: 500px;
+            margin: 0 auto;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+        }
+        h1 {
+            color: #6A0DAD;
+            margin-bottom: 20px;
+        }
+        select {
+            width: 100%;
+            padding: 12px;
+            font-size: 16px;
+            border-radius: 8px;
+            border: 2px solid #E6E6FA;
+            margin-bottom: 20px;
+        }
+        .link-box {
+            background: #F3E8FF;
+            border-radius: 10px;
+            padding: 15px;
+            word-break: break-all;
+            color: #4B0082;
+            font-weight: bold;
+            display: none;
+        }
+        .copy-btn {
+            background: #8A2BE2;
+            color: white;
+            border: none;
+            padding: 10px 18px;
+            border-radius: 8px;
+            margin-top: 10px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: all 0.3s;
+        }
+        .copy-btn:hover {
+            background: #6A0DAD;
+            transform: translateY(-2px);
+        }
+        footer {
+            margin-top: 30px;
+            color: #ccc;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h1>Generador de Links 🐪</h1>
+        <p>Selecciona el líder y comparte su enlace de registro:</p>
+
+        <select id="lider" onchange="generarLink()">
+            <option value="">-- Selecciona un líder --</option>
+            <option value="alejo">Alejo</option>
+            <option value="maria">María</option>
+            <option value="juan">Juan</option>
+            <option value="camila">Camila</option>
+        </select>
+
+        <div id="linkBox" class="link-box">
+            <p id="linkText"></p>
+            <button class="copy-btn" onclick="copiarLink()">📋 Copiar Link</button>
+        </div>
+    </div>
+
+    <footer>✨ Team Alejo el del Camello © 2025 ✨</footer>
+
+    <script>
+        const BASE_URL = "https://mi-registro-whatsapp-6.onrender.com";
+
+        function generarLink() {
+            const lider = document.getElementById("lider").value;
+            const linkBox = document.getElementById("linkBox");
+            const linkText = document.getElementById("linkText");
+
+            if (!lider) {
+                linkBox.style.display = "none";
+                return;
+            }
+
+            const fullLink = `${BASE_URL}/?lider=${lider}`;
+            linkText.textContent = fullLink;
+            linkBox.style.display = "block";
+        }
+
+        function copiarLink() {
+            const linkText = document.getElementById("linkText").textContent;
+            navigator.clipboard.writeText(linkText)
+                .then(() => alert("✅ Link copiado al portapapeles"))
+                .catch(() => alert("⚠️ Error al copiar el link"));
+        }
+    </script>
+
+</body>
+</html>
