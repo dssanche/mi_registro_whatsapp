@@ -2,7 +2,6 @@
 <html>
 <head>
     <title>Registro - 🐪 Únete al equipo de Team Alejo el del Camello 🐪</title>
-    <script src="https://cdn.jsdelivr.net/npm/qrcode@1.5.3/build/qrcode.min.js"></script>
     <style>
         body { 
             font-family: 'Arial', sans-serif; 
@@ -39,7 +38,6 @@
             margin: 10px 0;
         }
 
-        /* Redes sociales */
         .redes-sociales {
             text-align: center;
             margin: 15px 0 25px 0;
@@ -111,21 +109,6 @@
             box-shadow: 0 5px 15px rgba(138, 43, 226, 0.4);
         }
 
-        /* Sección QR */
-        .qr-section { 
-            text-align: center; 
-            margin: 25px 0; 
-            padding: 20px; 
-            border: 2px dashed #8A2BE2; 
-            border-radius: 10px; 
-            background-color: #F8F0FF;
-        }
-        .qr-canvas {
-            border: 3px solid #8A2BE2;
-            border-radius: 10px;
-            margin-top: 10px;
-        }
-
         .link-section {
             background-color: #F0E6FF;
             padding: 15px;
@@ -139,6 +122,10 @@
             font-size: 14px;
             width: auto;
             margin-top: 10px;
+            border: none;
+            color: white;
+            border-radius: 8px;
+            cursor: pointer;
         }
         .footer {
             text-align: center;
@@ -161,7 +148,6 @@
             <h1>Únete al equipo de Alejo</h1>
             <div class="subtitle">¡Forma parte de nuestra comunidad!</div>
 
-            <!-- Redes Sociales -->
             <div class="redes-sociales">
                 <div class="redes-titulo">Sígueme en:</div>
                 <div class="social-links">
@@ -179,33 +165,17 @@
         </div>
 
         <form action="/registro" method="POST">
-            <!-- Selección de Líder -->
-            <div class="form-group">
-                <label for="lider">👑 Líder:</label>
-                <select id="lider" name="lider" onchange="actualizarQR()" required>
-                    <option value="">-- Selecciona tu líder --</option>
-                    {% for id, nombre in lideres.items() %}
-                        <option value="{{ id }}" {% if lider_seleccionado == id %}selected{% endif %}>
-                            {{ nombre }}
-                        </option>
-                    {% endfor %}
-                </select>
-            </div>
+            <input type="hidden" name="lider" value="{{ lider }}">
 
-            <!-- SECCIÓN DE QR AGREGADA -->
-            <div id="qrSection" class="qr-section" style="display:none;">
-                <h3>📱 Escanea tu QR para registrarte</h3>
-                <div id="qrContainer"></div>
-            </div>
-
-            <!-- Link directo -->
+            <!-- Link compartible -->
+            {% if lider %}
             <div class="link-section">
-                <strong>🔗 Link directo:</strong><br>
-                <span id="directLink"></span>
+                <strong>🔗 Link de registro de tu líder:</strong><br>
+                <span id="directLink">https://mi-registro-whatsapp-6.onrender.com/?lider={{ lider }}</span>
                 <button type="button" onclick="copiarLink()" class="copy-btn">📋 Copiar Link</button>
             </div>
+            {% endif %}
 
-            <!-- Datos personales -->
             <div class="form-group">
                 <label for="nombre">👤 Nombre completo:</label>
                 <input type="text" id="nombre" name="nombre" required>
@@ -219,6 +189,7 @@
             <div class="form-group">
                 <label for="nacimiento">📅 Fecha de nacimiento:</label>
                 <input type="date" id="nacimiento" name="nacimiento" required>
+                <input type="hidden" id="edad" name="edad">
                 <div id="edad-display" class="edad-calculada"></div>
             </div>
 
@@ -258,9 +229,12 @@
     </div>
 
     <script>
+        // Calcular edad automáticamente
         function calcularYMostrarEdad() {
             const fechaNacimiento = document.getElementById('nacimiento');
             const edadDisplay = document.getElementById('edad-display');
+            const edadInput = document.getElementById('edad');
+
             if (fechaNacimiento.value) {
                 const nacimiento = new Date(fechaNacimiento.value);
                 const hoy = new Date();
@@ -268,37 +242,14 @@
                 const mes = hoy.getMonth() - nacimiento.getMonth();
                 if (mes < 0 || (mes === 0 && hoy.getDate() < nacimiento.getDate())) edad--;
                 edadDisplay.textContent = `✅ Edad calculada: ${edad} años`;
-            } else edadDisplay.textContent = '';
-        }
-
-        function actualizarQR() {
-            const liderSelect = document.getElementById('lider');
-            const liderId = liderSelect.value;
-            const qrSection = document.getElementById('qrSection');
-            const qrContainer = document.getElementById('qrContainer');
-            const directLink = document.getElementById('directLink');
-
-            if (liderId) {
-                qrSection.style.display = 'block';
-                const baseUrl = window.location.origin;
-                const formUrl = `${baseUrl}/?lider=${liderId}`;
-                directLink.textContent = formUrl;
-                qrContainer.innerHTML = '<canvas id="qrCanvas" class="qr-canvas"></canvas>';
-
-                QRCode.toCanvas(document.getElementById('qrCanvas'), formUrl, {
-                    width: 200,
-                    margin: 2,
-                    color: { dark: '#8A2BE2', light: '#FFFFFF' }
-                }, function(error) {
-                    if (error) console.error('Error generando QR:', error);
-                    else console.log('✅ QR generado correctamente');
-                });
+                edadInput.value = edad;
             } else {
-                qrSection.style.display = 'none';
-                directLink.textContent = '';
+                edadDisplay.textContent = '';
+                edadInput.value = '';
             }
         }
 
+        // Copiar link al portapapeles
         function copiarLink() {
             const linkText = document.getElementById('directLink').textContent;
             navigator.clipboard.writeText(linkText)
@@ -308,8 +259,6 @@
 
         document.addEventListener('DOMContentLoaded', function() {
             document.getElementById('nacimiento').addEventListener('change', calcularYMostrarEdad);
-            const liderSelect = document.getElementById('lider');
-            if (liderSelect.value) actualizarQR();
         });
     </script>
 </body>
