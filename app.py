@@ -141,6 +141,35 @@ def inferir_sexo_por_nombre(nombre):
     else:
         return "No determinado"
 
+#def generar_mensaje_bienvenida(nombre, sexo, localidad):
+ #   """Genera mensaje de bienvenida personalizado"""
+  #  if sexo == "Femenino":
+   #     saludo = f"¡Bienvenida {nombre}!"
+   # elif sexo == "Masculino":
+    #    saludo = f"¡Bienvenido {nombre}!"
+    #else:
+     #   saludo = f"¡Bienvenid@ {nombre}!"
+    #return f"{saludo} Nos alegra tener alguien más de {localidad} en nuestra comunidad 🎯"
+
+def generar_redes_sociales():
+    """Genera el HTML de las redes sociales"""
+    return """
+    <div class="redes-sociales">
+        <p>Sígueme en redes sociales:</p>
+        <div class="social-links">
+            <a href="https://www.instagram.com/alejoeldelcamello/" class="social-btn" target="_blank" title="Instagram">
+                <img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/instagram.svg" alt="Instagram" width="24" height="24">
+            </a>
+            <a href="https://x.com/alejoeldelcamello" class="social-btn" target="_blank" title="Twitter/X">
+                <img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/x.svg" alt="X" width="24" height="24">
+            </a>
+            <a href="https://www.tiktok.com/@alejoeldelcamello" class="social-btn" target="_blank" title="TikTok">
+                <img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/tiktok.svg" alt="TikTok" width="24" height="24">
+            </a>
+        </div>
+    </div>
+    """
+
 def generar_mensaje_bienvenida(nombre, sexo, localidad):
     """Genera mensaje de bienvenida personalizado"""
     if sexo == "Femenino":
@@ -150,7 +179,10 @@ def generar_mensaje_bienvenida(nombre, sexo, localidad):
     else:
         saludo = f"¡Bienvenid@ {nombre}!"
     
-    return f"{saludo} Nos alegra tener alguien más de {localidad} en nuestra comunidad 🎯"
+    mensaje_texto = f"{saludo} Nos alegra tener alguien más de {localidad} en nuestra comunidad 🎯"
+    
+    return mensaje_texto, generar_redes_sociales()
+
 
 # URL base - se actualizará automáticamente en producción
 def get_base_url():
