@@ -2,7 +2,6 @@
 <html>
 <head>
     <title>Registro - 🐪 Únete al equipo de Team Alejo el del Camello 🐪</title>
-    <!-- Librería QR que funciona en el navegador -->
     <script src="https://cdn.jsdelivr.net/npm/qrcode@1.5.3/build/qrcode.min.js"></script>
     <style>
         body { 
@@ -39,8 +38,8 @@
             font-size: 40px;
             margin: 10px 0;
         }
-        
-        /* Redes sociales - SOLO ICONOS */
+
+        /* Redes sociales */
         .redes-sociales {
             text-align: center;
             margin: 15px 0 25px 0;
@@ -73,10 +72,8 @@
             background: #6A0DAD;
             transform: translateY(-3px);
         }
-        
-        .form-group { 
-            margin-bottom: 20px; 
-        }
+
+        .form-group { margin-bottom: 20px; }
         label { 
             display: block; 
             margin-bottom: 8px; 
@@ -113,6 +110,8 @@
             transform: translateY(-2px);
             box-shadow: 0 5px 15px rgba(138, 43, 226, 0.4);
         }
+
+        /* Sección QR */
         .qr-section { 
             text-align: center; 
             margin: 25px 0; 
@@ -121,12 +120,12 @@
             border-radius: 10px; 
             background-color: #F8F0FF;
         }
-        .qr-image { 
-            max-width: 200px; 
-            margin: 10px auto; 
+        .qr-canvas {
             border: 3px solid #8A2BE2;
             border-radius: 10px;
+            margin-top: 10px;
         }
+
         .link-section {
             background-color: #F0E6FF;
             padding: 15px;
@@ -153,11 +152,6 @@
             margin-top: 8px;
             font-size: 14px;
         }
-        .qr-canvas {
-            border: 3px solid #8A2BE2;
-            border-radius: 10px;
-            margin: 10px auto;
-        }
     </style>
 </head>
 <body>
@@ -166,24 +160,24 @@
             <div class="camello-icon">🐪</div>
             <h1>Únete al equipo de Alejo</h1>
             <div class="subtitle">¡Forma parte de nuestra comunidad!</div>
-            
-            <!-- REDES SOCIALES - SOLO ICONOS, DEBAJO DEL TÍTULO -->
+
+            <!-- Redes Sociales -->
             <div class="redes-sociales">
                 <div class="redes-titulo">Sígueme en:</div>
                 <div class="social-links">
-                    	<a href="https://www.instagram.com/alejoeldelcamello/" class="social-btn" target="_blank" title="Instagram">
-  				<img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/instagram.svg" alt="Instagram" width="28" height="28" 					style="filter: invert(1);" />
-			</a>
-			<a href="https://x.com/alejoeldelcamello" class="social-btn" target="_blank" title="Twitter/X">
-  				<img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/x.svg" alt="X" width="28" height="28" style="filter: 					invert(1);" />
-			</a>
-			<a href="https://www.tiktok.com/@alejoeldelcamello" class="social-btn" target="_blank" title="TikTok">
-  				<img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/tiktok.svg" alt="TikTok" width="28" height="28" 						style="filter: invert(1);" />
-			</a>
+                    <a href="https://www.instagram.com/alejoeldelcamello/" class="social-btn" target="_blank" title="Instagram">
+                        <img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/instagram.svg" alt="Instagram" width="28" height="28" style="filter: invert(1);" />
+                    </a>
+                    <a href="https://x.com/alejoeldelcamello" class="social-btn" target="_blank" title="X">
+                        <img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/x.svg" alt="X" width="28" height="28" style="filter: invert(1);" />
+                    </a>
+                    <a href="https://www.tiktok.com/@alejoeldelcamello" class="social-btn" target="_blank" title="TikTok">
+                        <img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/tiktok.svg" alt="TikTok" width="28" height="28" style="filter: invert(1);" />
+                    </a>
                 </div>
             </div>
         </div>
-        
+
         <form action="/registro" method="POST">
             <!-- Selección de Líder -->
             <div class="form-group">
@@ -198,15 +192,20 @@
                 </select>
             </div>
 
-            <!-- Sección del QR -->
-                <div class="link-section">
-                    <strong>🔗 Link directo:</strong><br>
-                    <span id="directLink"></span>
-                    <button type="button" onclick="copiarLink()" class="copy-btn">📋 Copiar Link</button>
-                </div>
+            <!-- SECCIÓN DE QR AGREGADA -->
+            <div id="qrSection" class="qr-section" style="display:none;">
+                <h3>📱 Escanea tu QR para registrarte</h3>
+                <div id="qrContainer"></div>
             </div>
 
-            <!-- Información Personal -->
+            <!-- Link directo -->
+            <div class="link-section">
+                <strong>🔗 Link directo:</strong><br>
+                <span id="directLink"></span>
+                <button type="button" onclick="copiarLink()" class="copy-btn">📋 Copiar Link</button>
+            </div>
+
+            <!-- Datos personales -->
             <div class="form-group">
                 <label for="nombre">👤 Nombre completo:</label>
                 <input type="text" id="nombre" name="nombre" required>
@@ -223,7 +222,6 @@
                 <div id="edad-display" class="edad-calculada"></div>
             </div>
 
-            <!-- LOCALIDAD COMO DESPLEGABLE -->
             <div class="form-group">
                 <label for="localidad">🏠 Localidad:</label>
                 <select id="localidad" name="localidad" required>
@@ -260,27 +258,17 @@
     </div>
 
     <script>
-        // Función para calcular y mostrar la edad automáticamente
         function calcularYMostrarEdad() {
             const fechaNacimiento = document.getElementById('nacimiento');
             const edadDisplay = document.getElementById('edad-display');
-            
             if (fechaNacimiento.value) {
                 const nacimiento = new Date(fechaNacimiento.value);
                 const hoy = new Date();
                 let edad = hoy.getFullYear() - nacimiento.getFullYear();
                 const mes = hoy.getMonth() - nacimiento.getMonth();
-                
-                // Ajustar si aún no ha cumplido años este año
-                if (mes < 0 || (mes === 0 && hoy.getDate() < nacimiento.getDate())) {
-                    edad--;
-                }
-                
+                if (mes < 0 || (mes === 0 && hoy.getDate() < nacimiento.getDate())) edad--;
                 edadDisplay.textContent = `✅ Edad calculada: ${edad} años`;
-                edadDisplay.style.color = '#25D366';
-            } else {
-                edadDisplay.textContent = '';
-            }
+            } else edadDisplay.textContent = '';
         }
 
         function actualizarQR() {
@@ -291,72 +279,37 @@
             const directLink = document.getElementById('directLink');
 
             if (liderId) {
-                // Mostrar sección del QR
                 qrSection.style.display = 'block';
-                
-                // Generar URL del formulario con el líder seleccionado
                 const baseUrl = window.location.origin;
                 const formUrl = `${baseUrl}/?lider=${liderId}`;
-                
-                // Actualizar link directo
                 directLink.textContent = formUrl;
-                
-                // GENERAR QR DIRECTAMENTE EN EL NAVEGADOR
                 qrContainer.innerHTML = '<canvas id="qrCanvas" class="qr-canvas"></canvas>';
-                
+
                 QRCode.toCanvas(document.getElementById('qrCanvas'), formUrl, {
                     width: 200,
                     margin: 2,
-                    color: {
-                        dark: '#8A2BE2',  // Color morado
-                        light: '#FFFFFF'  // Fondo blanco
-                    }
+                    color: { dark: '#8A2BE2', light: '#FFFFFF' }
                 }, function(error) {
-                    if (error) {
-                        console.error('Error generando QR:', error);
-                        qrContainer.innerHTML = `
-                            <div style="color: #ff6b6b; font-weight: bold;">
-                                ❌ Error generando QR<br>
-                                Usa el link directo
-                            </div>
-                        `;
-                    } else {
-                        console.log('✅ QR generado exitosamente en el navegador');
-                    }
+                    if (error) console.error('Error generando QR:', error);
+                    else console.log('✅ QR generado correctamente');
                 });
-                
             } else {
                 qrSection.style.display = 'none';
+                directLink.textContent = '';
             }
         }
 
         function copiarLink() {
             const linkText = document.getElementById('directLink').textContent;
-            navigator.clipboard.writeText(linkText).then(function() {
-                alert('✅ Link copiado al portapapeles!');
-            }).catch(function() {
-                // Fallback para navegadores antiguos
-                const tempInput = document.createElement('input');
-                tempInput.value = linkText;
-                document.body.appendChild(tempInput);
-                tempInput.select();
-                document.execCommand('copy');
-                document.body.removeChild(tempInput);
-                alert('✅ Link copiado al portapapeles!');
-            });
+            navigator.clipboard.writeText(linkText)
+                .then(() => alert('✅ Link copiado al portapapeles!'))
+                .catch(() => alert('⚠️ Error al copiar el link.'));
         }
 
-        // Inicializar cuando cargue la página
         document.addEventListener('DOMContentLoaded', function() {
-            // Configurar calculadora de edad
-            const fechaNacimiento = document.getElementById('nacimiento');
-            fechaNacimiento.addEventListener('change', calcularYMostrarEdad);
-            
-            // Inicializar QR si ya hay un líder seleccionado
+            document.getElementById('nacimiento').addEventListener('change', calcularYMostrarEdad);
             const liderSelect = document.getElementById('lider');
-            if (liderSelect.value) {
-                actualizarQR();
-            }
+            if (liderSelect.value) actualizarQR();
         });
     </script>
 </body>
