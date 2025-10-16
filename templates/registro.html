@@ -23,6 +23,45 @@
             color: #6A0DAD;
             text-align: center;
         }
+        .camello-icon {
+            font-size: 40px;
+            text-align: center;
+            margin-bottom: 10px;
+        }
+        .subtitle {
+            text-align: center;
+            color: #8A2BE2;
+            margin-bottom: 15px;
+        }
+        /* Redes sociales */
+        .redes-sociales {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        .social-links {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+        }
+        .social-btn {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 45px;
+            height: 45px;
+            background: #8A2BE2;
+            border-radius: 50%;
+            transition: all 0.3s;
+        }
+        .social-btn:hover {
+            background: #6A0DAD;
+            transform: translateY(-2px);
+        }
+        .social-btn img {
+            width: 24px;
+            height: 24px;
+            filter: invert(1);
+        }
         label {
             display: block;
             margin-top: 15px;
@@ -74,15 +113,38 @@
             font-weight: bold;
             margin-top: 5px;
         }
+        .footer {
+            text-align: center;
+            color: #8A2BE2;
+            margin-top: 30px;
+            font-size: 14px;
+        }
     </style>
 </head>
 <body>
 
 <div class="container">
-    <h1>🐪 Únete al equipo de Alejo 🐪</h1>
+    <div class="camello-icon">🐪</div>
+    <h1>Únete al equipo de Alejo</h1>
+    <div class="subtitle">¡Forma parte de nuestra comunidad!</div>
+
+    <!-- Redes sociales -->
+    <div class="redes-sociales">
+        <div class="social-links">
+            <a href="https://www.instagram.com/alejoeldelcamello/" class="social-btn" target="_blank" title="Instagram">
+                <img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/instagram.svg" alt="Instagram">
+            </a>
+            <a href="https://x.com/alejoeldelcamello" class="social-btn" target="_blank" title="Twitter/X">
+                <img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/x.svg" alt="X">
+            </a>
+            <a href="https://www.tiktok.com/@alejoeldelcamello" class="social-btn" target="_blank" title="TikTok">
+                <img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/tiktok.svg" alt="TikTok">
+            </a>
+        </div>
+    </div>
 
     <form id="registroForm" action="/registro" method="POST">
-        <!-- Campo visible para elegir líder -->
+        <!-- Selección del líder -->
         <label for="liderSelect">👑 Líder:</label>
         <select id="liderSelect" name="liderSelect" required>
             <option value="">-- Selecciona tu líder --</option>
@@ -92,15 +154,17 @@
             <option value="camila">Camila</option>
         </select>
 
-        <!-- Campo oculto que Flask recibe -->
+        <!-- Campo oculto para enviar el líder a Flask -->
         <input type="hidden" id="lider" name="lider" value="{{ lider }}">
 
+        <!-- Sección del link copiable -->
         <div class="copy-section">
             <strong>🔗 Link del líder:</strong>
             <p id="linkDisplay"></p>
             <button type="button" class="copy-btn" onclick="copiarLink()">📋 Copiar Link</button>
         </div>
 
+        <!-- Campos personales -->
         <label>👤 Nombre completo:</label>
         <input type="text" id="nombre" name="nombre" required>
 
@@ -126,15 +190,18 @@
         </select>
 
         <input type="hidden" name="edad" id="edad" value="">
-
         <button type="submit">✅ Unirse al grupo de WhatsApp</button>
     </form>
+
+    <div class="footer">
+        ✨ Formulario de registro - 🐪 Team Alejo el del Camello ✨
+    </div>
 </div>
 
 <script>
     const BASE_URL = "https://mi-registro-whatsapp-6.onrender.com";
 
-    // Si viene ?lider= en el URL, marcarlo automáticamente
+    // Detectar parámetro ?lider= en la URL
     document.addEventListener("DOMContentLoaded", () => {
         const params = new URLSearchParams(window.location.search);
         const lider = params.get("lider");
@@ -167,18 +234,19 @@
         }
     });
 
-    // Copiar link
+    // Copiar link al portapapeles
     function copiarLink() {
         const text = document.getElementById("linkDisplay").textContent;
         if (text.includes("http")) {
-            navigator.clipboard.writeText(text);
-            alert("✅ Link copiado al portapapeles!");
+            navigator.clipboard.writeText(text)
+                .then(() => alert("✅ Link copiado al portapapeles!"))
+                .catch(() => alert("⚠️ No se pudo copiar el link."));
         } else {
             alert("⚠️ No hay link para copiar.");
         }
     }
 
-    // Calcular edad
+    // Calcular edad automáticamente
     document.getElementById("nacimiento").addEventListener("change", () => {
         const nacimiento = document.getElementById("nacimiento").value;
         const edadDisplay = document.getElementById("edadDisplay");
@@ -200,7 +268,7 @@
         }
     });
 
-    // Validación antes de enviar
+    // Validar antes de enviar
     document.getElementById("registroForm").addEventListener("submit", (e) => {
         const lider = document.getElementById("lider").value;
         if (!lider) {
