@@ -115,22 +115,56 @@ def inferir_sexo_por_nombre(nombre):
     
     # Base de datos local de nombres colombianos comunes
     nombres_femeninos = {
-        'maria', 'luz', 'ana', 'carolina', 'andrea', 'laura', 'paula', 
-        'diana', 'claudia', 'sandra', 'patricia', 'elena', 'isabel',
-        'carmen', 'juliana', 'natalia', 'vanessa', 'katherine', 'gabriela',
-        'susana', 'fernanda', 'valentina', 'sofia', 'camila', 'valeria',
-        'daniela', 'mariana', 'alejandra', 'lina', 'monica', 'liliana',
-        'catalina', 'johanna', 'yesica', 'kelly', 'wendy', 'xiomara'
-    }
+    'maria', 'luz', 'ana', 'carolina', 'andrea', 'laura', 'paula', 
+    'diana', 'claudia', 'sandra', 'patricia', 'elena', 'isabel',
+    'carmen', 'juliana', 'natalia', 'vanessa', 'katherine', 'gabriela',
+    'susana', 'fernanda', 'valentina', 'sofia', 'camila', 'valeria',
+    'daniela', 'mariana', 'alejandra', 'lina', 'monica', 'liliana',
+    'catalina', 'johanna', 'yesica', 'kelly', 'wendy', 'xiomara',
+    'adriana', 'beatriz', 'rosa', 'lucia', 'veronica', 'viviana', 'marcela',
+    'silvia', 'melissa', 'nancy', 'gloria', 'andrea', 'angela', 'martha',
+    'tatiana', 'ines', 'luzmila', 'nora', 'claudia', 'karina', 'tamara',
+    'dayana', 'nataly', 'sara', 'estrella', 'olga', 'jazmin', 'yamile',
+    'mabel', 'brenda', 'lizeth', 'milena', 'yuliana', 'emilia', 'martina',
+    'antonia', 'regina', 'noelia', 'cristina', 'roxana', 'paulina', 'luciana',
+    'celeste', 'carla', 'miryam', 'teresa', 'susy', 'marcela', 'pilar',
+    'evelyn', 'carol', 'margarita', 'alejandrina', 'nidia', 'marta',
+    'ines', 'flor', 'fabiola', 'irma', 'marisol', 'adela', 'reina',
+    'nury', 'maritza', 'jazmín', 'grecia', 'amanda', 'yulieth', 'cindy',
+    'mayra', 'sandra', 'patty', 'lorena', 'yohana', 'sindy', 'marleny',
+    'karol', 'genesis', 'darly', 'vivian', 'joana', 'leidy', 'samantha',
+    'sabrina', 'gisel', 'pamela', 'rosaura', 'yesenia', 'valery', 'isabela',
+    'marcela', 'florencia', 'constanza', 'eliana', 'soledad', 'narda',
+    'mercedes', 'yenny', 'claribel', 'graciela', 'aurora', 'doris', 'camila',
+    'alba', 'adina', 'mireya', 'caro', 'berenice', 'carmina', 'guadalupe'
+    }   
+
     
     nombres_masculinos = {
-        'juan', 'carlos', 'andres', 'alejandro', 'david', 'jose', 'luis',
-        'miguel', 'antonio', 'jorge', 'ricardo', 'fernando', 'daniel',
-        'pablo', 'santiago', 'esteban', 'felipe', 'oscar', 'manuel',
-        'alberto', 'rafael', 'eduardo', 'rodrigo', 'mario', 'victor',
-        'alejo', 'camilo', 'sebastian', 'nicolas', 'christian', 'wilson',
-        'alexander', 'brayan', 'cristian', 'jeison', 'jherson', 'jhon'
+    'juan', 'carlos', 'andres', 'alejandro', 'david', 'jose', 'luis',
+    'miguel', 'antonio', 'jorge', 'ricardo', 'fernando', 'daniel',
+    'pablo', 'santiago', 'esteban', 'felipe', 'oscar', 'manuel',
+    'alberto', 'rafael', 'eduardo', 'rodrigo', 'mario', 'victor',
+    'alejo', 'camilo', 'sebastian', 'nicolas', 'christian', 'wilson',
+    'alexander', 'brayan', 'cristian', 'jeison', 'jherson', 'jhon',
+    'martin', 'pedro', 'roberto', 'german', 'hugo', 'julian', 'angel',
+    'ramiro', 'adolfo', 'alfredo', 'gustavo', 'raul', 'henry', 'elias',
+    'ivan', 'hector', 'cesar', 'diego', 'edgar', 'rubén', 'jaime',
+    'francisco', 'victor', 'armando', 'guillermo', 'luisfer', 'alfonso',
+    'marcos', 'ismael', 'cristobal', 'leo', 'franco', 'joel', 'josue',
+    'ronald', 'kevin', 'emanuel', 'alvaro', 'mauricio', 'gustavo',
+    'tomas', 'sebastian', 'ignacio', 'adrian', 'jorge', 'hernan',
+    'samuel', 'lucas', 'facundo', 'sergio', 'edwin', 'césar', 'nicolas',
+    'miguelangel', 'francisco', 'humberto', 'ramon', 'anibal', 'edison',
+    'alexis', 'lennin', 'danilo', 'giovanni', 'julio', 'milton', 'robinson',
+    'cristopher', 'bruno', 'jacobo', 'ulises', 'fabian', 'dario', 'gerardo',
+    'adolfo', 'oswaldo', 'harrison', 'johnny', 'leonardo', 'bryan', 'edwin',
+    'benjamin', 'valentin', 'matias', 'ruben', 'mateo', 'enrique', 'gustavo',
+    'alonso', 'orlando', 'lennard', 'franklin', 'emanuel', 'heriberto',
+    'tadeo', 'thiago', 'luca', 'cristian', 'michael', 'elkin', 'jorge',
+    'fabio', 'alex', 'ivan', 'ricardo', 'moises', 'omar', 'ramiro'
     }
+
     
     nombre_lower = nombre_limpio.lower()
     
