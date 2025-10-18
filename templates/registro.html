@@ -189,10 +189,47 @@
             <option value="Otra">Otra</option>
         </select>
 
-        <input type="hidden" name="edad" id="edad" value="">
+	<input type="hidden" name="edad" id="edad" value="">
+
+<!-- 🔒 Autorización de tratamiento de datos (dentro del form) -->
+<label style="margin-top: 20px; font-weight: bold; color: #6A0DAD;">🔒 Autorización de tratamiento de datos</label>
+<div style="margin-top: 10px; border: 2px solid #E6E6FA; border-radius: 8px; padding: 10px;">
+    <input type="checkbox" id="aceptoDatos" name="aceptoDatos" required>
+    <label for="aceptoDatos">
+        Acepto el tratamiento de mis datos personales conforme a la 
+        <a href="javascript:void(0)" onclick="togglePolitica()" style="color:#8A2BE2; text-decoration: underline;">Política de Privacidad</a>.
+    </label>
+
+    <div id="politicaContainer" style="display:none; margin-top:10px; background-color:#F3E8FF; padding:12px; border-radius:8px; font-size:0.9rem; color:#4B0082;">
+        <strong>Política de Privacidad</strong><br><br>
+        En cumplimiento de la Ley 1581 de 2012 y el Decreto 1377 de 2013, 
+        <b>Team Alejo el del Camello</b> informa que los datos personales aquí recolectados serán utilizados exclusivamente 
+        para fines de <b>registro, contacto, análisis de participación y actividades informativas relacionadas con la campaña</b>.<br><br>
+        Los datos serán tratados de forma confidencial y no se compartirán con terceros sin autorización. 
+        El titular podrá solicitar la eliminación o modificación de sus datos escribiendo a 
+        <b>contacto@teamalejocamello.com</b>.<br><br>
+        Al marcar la casilla, usted autoriza el tratamiento de sus datos personales conforme a esta política.
+    </div>
+</div>
+
+<!-- ✅ Botón de envío -->
+<button type="submit">✅ Unirse al grupo de WhatsApp</button>
+</form>
+
+<script>
+function togglePolitica() {
+    const cont = document.getElementById('politicaContainer');
+    cont.style.display = cont.style.display === 'none' ? 'block' : 'none';
+}
+</script>
+
+<div class="footer">
+    ✨ Formulario de registro - 🐪 Team Alejo el del Camello ✨
+</div>
+
         <button type="submit">✅ Unirse al grupo de WhatsApp</button>
     </form>
-
+	
     <div class="footer">
         ✨ Formulario de registro - 🐪 Team Alejo el del Camello ✨
     </div>
