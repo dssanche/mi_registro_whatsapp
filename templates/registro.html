@@ -18,7 +18,20 @@
             padding: 30px;
             border-radius: 15px;
             box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+            text-align: center;
         }
+
+        /* 🟣 Imagen de Alejo */
+        .profile-img {
+            width: 130px;
+            height: 130px;
+            border-radius: 50%;
+            object-fit: cover;
+            box-shadow: 0 0 15px #a855f7;
+            border: 3px solid white;
+            margin-bottom: 15px;
+        }
+
         h1 {
             color: #6A0DAD;
             text-align: center;
@@ -67,6 +80,7 @@
             margin-top: 15px;
             font-weight: bold;
             color: #6A0DAD;
+            text-align: left;
         }
         input, select, button {
             width: 100%;
@@ -124,6 +138,9 @@
 <body>
 
 <div class="container">
+    <!-- 🐪 Imagen de Alejo -->
+    <img src="alejo.jpg" alt="Alejo el del Camello" class="profile-img">
+
     <div class="camello-icon">🐪</div>
     <h1>Únete al equipo de Alejo</h1>
     <div class="subtitle">¡Forma parte de nuestra comunidad!</div>
@@ -143,8 +160,8 @@
         </div>
     </div>
 
+    <!-- Formulario -->
     <form id="registroForm" action="/registro" method="POST">
-        <!-- Selección del líder -->
         <label for="liderSelect">👑 Líder:</label>
         <select id="liderSelect" name="liderSelect" required>
             <option value="">-- Selecciona tu líder --</option>
@@ -154,17 +171,14 @@
             <option value="andres">Andrés</option>
         </select>
 
-        <!-- Campo oculto para enviar el líder a Flask -->
         <input type="hidden" id="lider" name="lider" value="{{ lider }}">
 
-        <!-- Sección del link copiable -->
         <div class="copy-section">
             <strong>🔗 Link del líder:</strong>
             <p id="linkDisplay"></p>
             <button type="button" class="copy-btn" onclick="copiarLink()">📋 Copiar Link</button>
         </div>
 
-        <!-- Campos personales -->
         <label>👤 Nombre completo:</label>
         <input type="text" id="nombre" name="nombre" required>
 
@@ -186,133 +200,125 @@
             <option value="Usme">Usme</option>
             <option value="Ciudad Bolívar">Ciudad Bolívar</option>
             <option value="Chapinero">Chapinero</option>
-	    <option value="Usaquen">Usaquen</option>
-	    <option value="Tunjuelito">Tunjuelito</option>
-	    <option value="Santa Fe">Santa Fe</option>
-	    <option value="San Cristobal">San Cristobal</option>
-	    <option value="Barrios Unidos">Barrios Unidos</option>
-	    <option value="Rafael Uribe">Rafael Uribe</option>
-	    <option value="Sumapaz">Sumapaz</option>
-	    <option value="Puente Aranda">Puente Aranda</option>
-	    <option value="Ciudad Bolivar">Ciudad Bolivar</option>								
+            <option value="Usaquén">Usaquén</option>
+            <option value="Tunjuelito">Tunjuelito</option>
+            <option value="Santa Fe">Santa Fe</option>
+            <option value="San Cristobal">San Cristobal</option>
+            <option value="Barrios Unidos">Barrios Unidos</option>
+            <option value="Rafael Uribe">Rafael Uribe</option>
+            <option value="Sumapaz">Sumapaz</option>
+            <option value="Puente Aranda">Puente Aranda</option>
             <option value="Otra">Otra</option>
         </select>
 
-	<input type="hidden" name="edad" id="edad" value="">
+        <input type="hidden" name="edad" id="edad" value="">
 
-<!-- 🔒 Autorización de tratamiento de datos (dentro del form) -->
-<label style="margin-top: 20px; font-weight: bold; color: #6A0DAD;">🔒 Autorización de tratamiento de datos</label>
-<div style="margin-top: 10px; border: 2px solid #E6E6FA; border-radius: 8px; padding: 10px;">
-    <input type="checkbox" id="aceptoDatos" name="aceptoDatos" required>
-    <label for="aceptoDatos">
-        Acepto el tratamiento de mis datos personales conforme a la 
-        <a href="javascript:void(0)" onclick="togglePolitica()" style="color:#8A2BE2; text-decoration: underline;">Política de Privacidad</a>.
-    </label>
+        <label style="margin-top: 20px; font-weight: bold; color: #6A0DAD;">🔒 Autorización de tratamiento de datos</label>
+        <div style="margin-top: 10px; border: 2px solid #E6E6FA; border-radius: 8px; padding: 10px;">
+            <input type="checkbox" id="aceptoDatos" name="aceptoDatos" required>
+            <label for="aceptoDatos">
+                Acepto el tratamiento de mis datos personales conforme a la 
+                <a href="javascript:void(0)" onclick="togglePolitica()" style="color:#8A2BE2; text-decoration: underline;">Política de Privacidad</a>.
+            </label>
 
-    <div id="politicaContainer" style="display:none; margin-top:10px; background-color:#F3E8FF; padding:12px; border-radius:8px; font-size:0.9rem; color:#4B0082;">
-        <strong>Política de Privacidad</strong><br><br>
-        En cumplimiento de la Ley 1581 de 2012 y el Decreto 1377 de 2013, 
-        <b>Team Alejo el del Camello</b> informa que los datos personales aquí recolectados serán utilizados exclusivamente 
-        para fines de <b>registro, contacto, análisis de participación y actividades informativas relacionadas con la campaña</b>.<br><br>
-        Los datos serán tratados de forma confidencial y no se compartirán con terceros sin autorización. 
-        El titular podrá solicitar la eliminación o modificación de sus datos escribiendo a 
-        <b>contacto@teamalejocamello.com</b>.<br><br>
-        Al marcar la casilla, usted autoriza el tratamiento de sus datos personales conforme a esta política.
+            <div id="politicaContainer" style="display:none; margin-top:10px; background-color:#F3E8FF; padding:12px; border-radius:8px; font-size:0.9rem; color:#4B0082;">
+                <strong>Política de Privacidad</strong><br><br>
+                En cumplimiento de la Ley 1581 de 2012 y el Decreto 1377 de 2013, 
+                <b>Team Alejo el del Camello</b> informa que los datos personales aquí recolectados serán utilizados exclusivamente 
+                para fines de <b>registro, contacto, análisis de participación y actividades informativas relacionadas con la campaña</b>.<br><br>
+                Los datos serán tratados de forma confidencial y no se compartirán con terceros sin autorización. 
+                El titular podrá solicitar la eliminación o modificación de sus datos escribiendo a 
+                <b>contacto@teamalejocamello.com</b>.<br><br>
+                Al marcar la casilla, usted autoriza el tratamiento de sus datos personales conforme a esta política.
+            </div>
+        </div>
+
+        <button type="submit">✅ Unirse al grupo de WhatsApp</button>
+    </form>
+
+    <div class="footer">
+        ✨ Formulario de registro - 🐪 Team Alejo el del Camello ✨
     </div>
 </div>
 
-<!-- ✅ Botón de envío -->
-<button type="submit">✅ Unirse al grupo de WhatsApp</button>
-</form>
-
 <script>
+const BASE_URL = "https://mi-registro-whatsapp-6.onrender.com";
+
+document.addEventListener("DOMContentLoaded", () => {
+    const params = new URLSearchParams(window.location.search);
+    const lider = params.get("lider");
+    const select = document.getElementById("liderSelect");
+    const hiddenInput = document.getElementById("lider");
+    const linkDisplay = document.getElementById("linkDisplay");
+
+    if (lider) {
+        select.value = lider.toLowerCase();
+        hiddenInput.value = lider.toLowerCase();
+        const link = `${BASE_URL}/?lider=${lider}`;
+        linkDisplay.textContent = link;
+    } else {
+        linkDisplay.textContent = "Selecciona un líder para generar tu link.";
+    }
+});
+
+document.getElementById("liderSelect").addEventListener("change", function() {
+    const lider = this.value;
+    const linkDisplay = document.getElementById("linkDisplay");
+    const hiddenInput = document.getElementById("lider");
+
+    if (lider) {
+        const link = `${BASE_URL}/?lider=${lider}`;
+        linkDisplay.textContent = link;
+        hiddenInput.value = lider;
+    } else {
+        linkDisplay.textContent = "Selecciona un líder para generar tu link.";
+    }
+});
+
+function copiarLink() {
+    const text = document.getElementById("linkDisplay").textContent;
+    if (text.includes("http")) {
+        navigator.clipboard.writeText(text)
+            .then(() => alert("✅ Link copiado al portapapeles!"))
+            .catch(() => alert("⚠️ No se pudo copiar el link."));
+    } else {
+        alert("⚠️ No hay link para copiar.");
+    }
+}
+
+document.getElementById("nacimiento").addEventListener("change", () => {
+    const nacimiento = document.getElementById("nacimiento").value;
+    const edadDisplay = document.getElementById("edadDisplay");
+    const edadInput = document.getElementById("edad");
+
+    if (nacimiento) {
+        const fechaNac = new Date(nacimiento);
+        const hoy = new Date();
+        let edad = hoy.getFullYear() - fechaNac.getFullYear();
+        const mes = hoy.getMonth() - fechaNac.getMonth();
+        if (mes < 0 || (mes === 0 && hoy.getDate() < fechaNac.getDate())) {
+            edad--;
+        }
+        edadInput.value = edad;
+        edadDisplay.textContent = `✅ Edad calculada: ${edad} años`;
+    } else {
+        edadInput.value = "";
+        edadDisplay.textContent = "";
+    }
+});
+
+document.getElementById("registroForm").addEventListener("submit", (e) => {
+    const lider = document.getElementById("lider").value;
+    if (!lider) {
+        e.preventDefault();
+        alert("⚠️ Por favor selecciona un líder antes de continuar.");
+    }
+});
+
 function togglePolitica() {
     const cont = document.getElementById('politicaContainer');
     cont.style.display = cont.style.display === 'none' ? 'block' : 'none';
 }
-</script>
-
-<div class="footer">
-    ✨ Formulario de registro - 🐪 Team Alejo el del Camello ✨
-</div>
-<script>
-    const BASE_URL = "https://mi-registro-whatsapp-6.onrender.com";
-
-    // Detectar parámetro ?lider= en la URL
-    document.addEventListener("DOMContentLoaded", () => {
-        const params = new URLSearchParams(window.location.search);
-        const lider = params.get("lider");
-        const select = document.getElementById("liderSelect");
-        const hiddenInput = document.getElementById("lider");
-        const linkDisplay = document.getElementById("linkDisplay");
-
-        if (lider) {
-            select.value = lider.toLowerCase();
-            hiddenInput.value = lider.toLowerCase();
-            const link = `${BASE_URL}/?lider=${lider}`;
-            linkDisplay.textContent = link;
-        } else {
-            linkDisplay.textContent = "Selecciona un líder para generar tu link.";
-        }
-    });
-
-    // Actualizar link cuando cambie el líder
-    document.getElementById("liderSelect").addEventListener("change", function() {
-        const lider = this.value;
-        const linkDisplay = document.getElementById("linkDisplay");
-        const hiddenInput = document.getElementById("lider");
-
-        if (lider) {
-            const link = `${BASE_URL}/?lider=${lider}`;
-            linkDisplay.textContent = link;
-            hiddenInput.value = lider;
-        } else {
-            linkDisplay.textContent = "Selecciona un líder para generar tu link.";
-        }
-    });
-
-    // Copiar link al portapapeles
-    function copiarLink() {
-        const text = document.getElementById("linkDisplay").textContent;
-        if (text.includes("http")) {
-            navigator.clipboard.writeText(text)
-                .then(() => alert("✅ Link copiado al portapapeles!"))
-                .catch(() => alert("⚠️ No se pudo copiar el link."));
-        } else {
-            alert("⚠️ No hay link para copiar.");
-        }
-    }
-
-    // Calcular edad automáticamente
-    document.getElementById("nacimiento").addEventListener("change", () => {
-        const nacimiento = document.getElementById("nacimiento").value;
-        const edadDisplay = document.getElementById("edadDisplay");
-        const edadInput = document.getElementById("edad");
-
-        if (nacimiento) {
-            const fechaNac = new Date(nacimiento);
-            const hoy = new Date();
-            let edad = hoy.getFullYear() - fechaNac.getFullYear();
-            const mes = hoy.getMonth() - fechaNac.getMonth();
-            if (mes < 0 || (mes === 0 && hoy.getDate() < fechaNac.getDate())) {
-                edad--;
-            }
-            edadInput.value = edad;
-            edadDisplay.textContent = `✅ Edad calculada: ${edad} años`;
-        } else {
-            edadInput.value = "";
-            edadDisplay.textContent = "";
-        }
-    });
-
-    // Validar antes de enviar
-    document.getElementById("registroForm").addEventListener("submit", (e) => {
-        const lider = document.getElementById("lider").value;
-        if (!lider) {
-            e.preventDefault();
-            alert("⚠️ Por favor selecciona un líder antes de continuar.");
-        }
-    });
 </script>
 
 </body>
