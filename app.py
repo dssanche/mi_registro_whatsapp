@@ -253,49 +253,48 @@ def registro():
     fecha_nacimiento = request.form.get('nacimiento')
     localidad = limpiar_texto(request.form.get('localidad'))
     lider = request.form.get('lider')
-    
-    # Validaciones básicas
-    if not all([nombre, telefono, fecha_nacimiento, localidad, lider]):
-        return "Por favor completa todos los campos requeridos", 400
-    
-    # Calcular edad automáticamente
-    edad_calculada = calcular_edad(fecha_nacimiento)
-    
-    # INFERIR SEXO POR NOMBRE
-    sexo_inferido = inferir_sexo_por_nombre(nombre)
-    
-    # Generar mensaje de bienvenida
-    mensaje_bienvenida = generar_mensaje_bienvenida(nombre, sexo_inferido, localidad)
-    
-    fecha_registro = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
-    
-    # Guardar en Google Sheets
     acepto_datos = request.form.get('aceptoDatos', 'No')
     acepto_datos = "Sí" if acepto_datos == "on" else "No"
 
+    # Validaciones básicas
+    if not all([nombre, telefono, fecha_nacimiento, localidad, lider]):
+        return "Por favor completa todos los campos requeridos", 400
 
-    # Preparar fila para Google Sheets
+    # Calcular edad automáticamente
+    edad_calculada = calcular_edad(fecha_nacimiento)
+
+    # Inferir sexo por nombre
+    sexo_inferido = inferir_sexo_por_nombre(nombre)
+
+    # Generar mensaje de bienvenida
+    mensaje_bienvenida, _ = generar_mensaje_bienvenida(nombre, sexo_inferido, localidad)
+
+    # Fecha de registro
+    fecha_registro = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+
+    # Construir la fila en el mismo orden que tu hoja de Google Sheets
     fila = [
-        nombre, 
-        telefono, 
-        edad_calculada if edad_calculada else "N/A", 
+        nombre,
+        telefono,
+        edad_calculada if edad_calculada else "N/A",
         fecha_nacimiento,
         localidad,
-        lider, 
+        lider,
         sexo_inferido,
         acepto_datos,
         mensaje_bienvenida,
         fecha_registro
     ]
-    
+
     try:
         sheet.append_row(fila, value_input_option="USER_ENTERED")
-        print(f"Registro exitoso: {nombre} - {sexo_inferido} - {localidad}")
+        print(f"✅ Registro exitoso: {nombre} ({sexo_inferido}) - {localidad}")
     except Exception as e:
-        print(f"Error guardando en Google Sheets: {e}")
+        print(f"❌ Error guardando en Google Sheets: {e}")
         return "Error al guardar el registro", 500
 
     return redirect(WHATSAPP_GROUP_LINK)
+
 
 from flask import send_file
 from io import BytesIO
