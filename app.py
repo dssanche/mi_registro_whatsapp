@@ -268,6 +268,11 @@ def registro():
     mensaje_bienvenida = generar_mensaje_bienvenida(nombre, sexo_inferido, localidad)
     
     fecha_registro = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+    
+    # Guardar en Google Sheets
+    acepto_datos = request.form.get('aceptoDatos', 'No')
+    acepto_datos = "Sí" if acepto_datos == "on" else "No"
+
 
     # Preparar fila para Google Sheets
     fila = [
@@ -278,6 +283,7 @@ def registro():
         localidad,
         lider, 
         sexo_inferido,
+        acepto_datos,
         mensaje_bienvenida,
         fecha_registro
     ]
