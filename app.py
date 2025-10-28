@@ -44,7 +44,8 @@ LIDERES = {
     "david": "David",
     "susana": "Susana",
     "alejo": "Alejo",
-    "andres": "Andrés"
+    "andres": "Andrés",
+    "sara": "Sara"
 }
 
 
