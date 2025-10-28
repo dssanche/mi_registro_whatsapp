@@ -37,7 +37,7 @@ def get_sheet():
 sheet = get_sheet()
 
 # --- ENLACE AL GRUPO DE WHATSAPP ---
-WHATSAPP_GROUP_LINK = "https://chat.whatsapp.com/BlXfChwXszFHroaBEUDnw8"
+WHATSAPP_GROUP_LINK = "https://whatsapp.com/channel/0029Vb6nnbs2975IKD6A1C1O"
 
 # --- LISTA DE LÍDERES ---
 LIDERES = {
